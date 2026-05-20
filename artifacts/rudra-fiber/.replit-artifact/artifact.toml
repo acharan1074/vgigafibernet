@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Rudra Fiber Net"
+version = "1.0.0"
+id = "artifacts/rudra-fiber"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25867
+
+[services.development]
+run = "pnpm --filter @workspace/rudra-fiber run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rudra-fiber", "run", "build" ]
+publicDir = "artifacts/rudra-fiber/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25867"
+BASE_PATH = "/"

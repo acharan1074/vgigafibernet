@@ -1,22 +1,32 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Rudra Fiber Net API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: plans
+    description: Broadband plan operations
+  - name: connections
+    description: Connection booking operations
+  - name: auth
+    description: Customer authentication
+  - name: customers
+    description: Customer management
+  - name: complaints
+    description: Complaint ticket management
+  - name: admin
+    description: Admin operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +34,236 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /plans:
+    get:
+      operationId: listPlans
+      tags: [plans]
+      summary: List all broadband plans
+      responses:
+        "200":
+          description: List of plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plan"
+
+  /connections:
+    get:
+      operationId: listConnections
+      tags: [connections]
+      summary: List all connection requests (admin)
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of connection requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Connection"
+    post:
+      operationId: createConnection
+      tags: [connections]
+      summary: Book a new fiber connection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConnectionInput"
+      responses:
+        "201":
+          description: Connection request created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+
+  /connections/{id}:
+    patch:
+      operationId: updateConnection
+      tags: [connections]
+      summary: Update connection request status (admin)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConnectionUpdate"
+      responses:
+        "200":
+          description: Updated connection
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Connection"
+
+  /auth/otp/send:
+    post:
+      operationId: sendOtp
+      tags: [auth]
+      summary: Send OTP to mobile number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpRequest"
+      responses:
+        "200":
+          description: OTP sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OtpResponse"
+
+  /auth/otp/verify:
+    post:
+      operationId: verifyOtp
+      tags: [auth]
+      summary: Verify OTP and login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OtpVerify"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResult"
+
+  /customers:
+    get:
+      operationId: listCustomers
+      tags: [customers]
+      summary: List all customers (admin)
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+
+  /customers/{id}:
+    get:
+      operationId: getCustomer
+      tags: [customers]
+      summary: Get customer details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Customer details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+
+  /complaints:
+    get:
+      operationId: listComplaints
+      tags: [complaints]
+      summary: List complaints
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of complaints
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Complaint"
+    post:
+      operationId: createComplaint
+      tags: [complaints]
+      summary: Submit a complaint ticket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComplaintInput"
+      responses:
+        "201":
+          description: Complaint submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Complaint"
+
+  /complaints/{id}:
+    patch:
+      operationId: updateComplaint
+      tags: [complaints]
+      summary: Update complaint status (admin)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComplaintUpdate"
+      responses:
+        "200":
+          description: Updated complaint
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Complaint"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get admin dashboard statistics
+      responses:
+        "200":
+          description: Admin stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +271,223 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        category:
+          type: string
+          description: "sd_tv | hd_tv | internet_only"
+        speed:
+          type: integer
+          description: Speed in Mbps
+        price:
+          type: integer
+          description: Monthly price in INR
+        features:
+          type: array
+          items:
+            type: string
+        isPopular:
+          type: boolean
+        createdAt:
+          type: string
+      required: [id, name, category, speed, price, features, isPopular, createdAt]
+
+    Connection:
+      type: object
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        mobile:
+          type: string
+        whatsapp:
+          type: ["string", "null"]
+        address:
+          type: string
+        village:
+          type: string
+        pinCode:
+          type: string
+        planId:
+          type: ["integer", "null"]
+        connectionType:
+          type: string
+          description: "home | business"
+        installationDate:
+          type: ["string", "null"]
+        status:
+          type: string
+          description: "pending | approved | installed | rejected"
+        createdAt:
+          type: string
+      required: [id, fullName, mobile, address, village, pinCode, connectionType, status, createdAt]
+
+    ConnectionInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+        mobile:
+          type: string
+        whatsapp:
+          type: string
+        address:
+          type: string
+        village:
+          type: string
+        pinCode:
+          type: string
+        planId:
+          type: integer
+        connectionType:
+          type: string
+        installationDate:
+          type: string
+      required: [fullName, mobile, address, village, pinCode, connectionType]
+
+    ConnectionUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+
+    OtpRequest:
+      type: object
+      properties:
+        mobile:
+          type: string
+      required: [mobile]
+
+    OtpResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required: [success, message]
+
+    OtpVerify:
+      type: object
+      properties:
+        mobile:
+          type: string
+        otp:
+          type: string
+      required: [mobile, otp]
+
+    AuthResult:
+      type: object
+      properties:
+        token:
+          type: string
+        customer:
+          $ref: "#/components/schemas/Customer"
+      required: [token, customer]
+
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        fullName:
+          type: string
+        mobile:
+          type: string
+        email:
+          type: ["string", "null"]
+        address:
+          type: string
+        village:
+          type: string
+        pinCode:
+          type: string
+        planId:
+          type: ["integer", "null"]
+        status:
+          type: string
+          description: "active | inactive | suspended"
+        dataUsedGB:
+          type: number
+        dataLimitGB:
+          type: number
+        dueDate:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+      required: [id, fullName, mobile, address, village, pinCode, status, dataUsedGB, dataLimitGB, createdAt]
+
+    Complaint:
+      type: object
+      properties:
+        id:
+          type: integer
+        customerId:
+          type: ["integer", "null"]
+        name:
+          type: string
+        mobile:
+          type: string
+        subject:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          description: "open | in_progress | resolved | closed"
+        priority:
+          type: string
+          description: "low | medium | high"
+        createdAt:
+          type: string
+      required: [id, name, mobile, subject, description, status, priority, createdAt]
+
+    ComplaintInput:
+      type: object
+      properties:
+        customerId:
+          type: integer
+        name:
+          type: string
+        mobile:
+          type: string
+        subject:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+      required: [name, mobile, subject, description]
+
+    ComplaintUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        priority:
+          type: string
+
+    AdminStats:
+      type: object
+      properties:
+        totalCustomers:
+          type: integer
+        activeConnections:
+          type: integer
+        pendingRequests:
+          type: integer
+        openComplaints:
+          type: integer
+        monthlyRevenue:
+          type: number
+        newConnectionsThisMonth:
+          type: integer
+      required: [totalCustomers, activeConnections, pendingRequests, openComplaints, monthlyRevenue, newConnectionsThisMonth]
