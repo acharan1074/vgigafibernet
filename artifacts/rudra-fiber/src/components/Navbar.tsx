@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon, Wifi, Phone } from "lucide-react";
+import { Menu, X, Sun, Moon, Phone } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 
@@ -24,16 +24,18 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" data-testid="nav-logo">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center gradient-gold neon-gold">
-                <Wifi className="w-5 h-5 text-background" strokeWidth={2.5} />
-              </div>
-              <div>
-                <span className="font-display text-sm sm:text-base font-700 gradient-text tracking-wider">
-                  RUDRA FIBER
+            <div className="flex items-center gap-2.5 cursor-pointer">
+              <img
+                src="/rudra-logo.jpeg"
+                alt="Rudra Fiber Net"
+                className="h-10 w-10 rounded-xl object-cover object-center"
+              />
+              <div className="leading-tight">
+                <span className="font-display text-sm sm:text-base font-bold gradient-text tracking-wider block">
+                  RUDRA FIBER NET
                 </span>
-                <span className="font-display text-xs text-muted-foreground block leading-none tracking-widest">
-                  NET
+                <span className="text-[10px] text-muted-foreground tracking-widest">
+                  ULTRA FAST CONNECTIVITY
                 </span>
               </div>
             </div>
@@ -59,7 +61,11 @@ export default function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <a href="tel:9640840216" className="hidden sm:flex items-center gap-1.5 text-xs text-accent font-medium hover:text-accent/80 transition-colors" data-testid="nav-phone">
+            <a
+              href="tel:9640840216"
+              className="hidden sm:flex items-center gap-1.5 text-xs text-accent font-medium hover:text-accent/80 transition-colors"
+              data-testid="nav-phone"
+            >
               <Phone className="w-3.5 h-3.5" />
               9640840216
             </a>
@@ -67,11 +73,21 @@ export default function Navbar() {
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
             <Link href="/login">
-              <Button size="sm" className="hidden md:flex gradient-gold border-0 text-background font-semibold hover:opacity-90 neon-gold transition-all" data-testid="nav-login-btn">
+              <Button
+                size="sm"
+                className="hidden md:flex gradient-gold border-0 text-background font-semibold hover:opacity-90 neon-gold transition-all"
+                data-testid="nav-login-btn"
+              >
                 Customer Login
               </Button>
             </Link>
-            <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileOpen(!mobileOpen)} data-testid="mobile-menu-btn">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              data-testid="mobile-menu-btn"
+            >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
@@ -104,7 +120,11 @@ export default function Navbar() {
               ))}
               <div className="flex items-center justify-between pt-2 border-t border-border/30">
                 <Link href="/login">
-                  <Button size="sm" onClick={() => setMobileOpen(false)} className="gradient-gold border-0 text-background font-semibold">
+                  <Button
+                    size="sm"
+                    onClick={() => setMobileOpen(false)}
+                    className="gradient-gold border-0 text-background font-semibold"
+                  >
                     Customer Login
                   </Button>
                 </Link>

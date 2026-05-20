@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Wifi, Phone, Mail, MapPin, Facebook, Youtube, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Youtube, Instagram } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 export default function Footer() {
@@ -9,13 +9,15 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center gradient-gold">
-                <Wifi className="w-5 h-5 text-background" strokeWidth={2.5} />
-              </div>
+            <div className="flex items-center gap-3">
+              <img
+                src="/rudra-logo.jpeg"
+                alt="Rudra Fiber Net"
+                className="h-12 w-12 rounded-xl object-cover object-center"
+              />
               <div>
                 <p className="font-display font-bold gradient-text tracking-wider">RUDRA FIBER NET</p>
-                <p className="text-xs text-muted-foreground">Ultra Fast Internet</p>
+                <p className="text-xs text-muted-foreground">Ultra Fast Connectivity</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
