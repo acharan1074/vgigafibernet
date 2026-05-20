@@ -323,3 +323,10 @@
   .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after { inset: -1px; }
 }
+
+/* Scrolling marquee for channel logos */
+@keyframes marquee-ltr { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes marquee-rtl { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+.animate-marquee-ltr { animation: marquee-ltr 35s linear infinite; }
+.animate-marquee-rtl { animation: marquee-rtl 35s linear infinite; }
+.marquee-track { display: flex; width: max-content; }

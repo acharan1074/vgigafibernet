@@ -28,28 +28,67 @@ const features = [
 ];
 
 const ottApps = [
-  { name: "Netflix", color: "bg-red-600", letter: "N" },
-  { name: "Prime Video", color: "bg-blue-500", letter: "P" },
-  { name: "Disney+ Hotstar", color: "bg-blue-700", letter: "D" },
-  { name: "Aha", color: "bg-red-500", letter: "A" },
-  { name: "Sun NXT", color: "bg-orange-500", letter: "S" },
-  { name: "Zee5", color: "bg-purple-600", letter: "Z" },
-  { name: "Sony LIV", color: "bg-blue-600", letter: "S" },
-  { name: "Voot", color: "bg-indigo-500", letter: "V" },
-  { name: "Epic On", color: "bg-green-600", letter: "E" },
-  { name: "Lionsgate", color: "bg-red-700", letter: "L" },
-  { name: "Hoichoi", color: "bg-pink-600", letter: "H" },
-  { name: "ShemarooMe", color: "bg-orange-600", letter: "S" },
+  { name: "Netflix",         logo: "/logos/netflix.png",     fallback: "N", bg: "#E50914" },
+  { name: "Prime Video",     logo: "/logos/primevideo.png",  fallback: "P", bg: "#00A8E1" },
+  { name: "Disney+ Hotstar", logo: "/logos/hotstar.png",     fallback: "D", bg: "#113CCF" },
+  { name: "Aha",             logo: "/logos/aha.png",         fallback: "A", bg: "#CF0001" },
+  { name: "Sun NXT",         logo: "/logos/sunnxt.png",      fallback: "S", bg: "#FF6B00" },
+  { name: "Zee5",            logo: "/logos/zee5.png",        fallback: "Z", bg: "#6B3FA0" },
+  { name: "Sony LIV",        logo: "/logos/sonyliv.png",     fallback: "S", bg: "#0060FF" },
+  { name: "Voot",            logo: "/logos/voot.png",        fallback: "V", bg: "#6A5AE0" },
+  { name: "DishTV WatCho",   logo: "/logos/dishtv.png",      fallback: "D", bg: "#FF4500" },
+  { name: "Epic On",         logo: "/logos/epicon.png",      fallback: "E", bg: "#138808" },
+  { name: "ShemarooMe",      logo: "/logos/shemaroome.png",  fallback: "S", bg: "#FF6600" },
+  { name: "Lionsgate Play",  logo: "/logos/lionsgate.png",   fallback: "L", bg: "#1a1a2e" },
+  { name: "Hoichoi",         logo: "/logos/hoichoi.png",     fallback: "H", bg: "#BF0000" },
+  { name: "Hungama Play",    logo: "/logos/hungama.png",     fallback: "H", bg: "#FF0080" },
 ];
 
-const channelCategories = {
-  Entertainment: ["ETV Telugu", "ETV Plus", "Gemini TV", "Maa TV", "Star Maa", "Zee Telugu", "Colors Telugu", "Studio N"],
-  Movies: ["ETV Cinema", "Gemini Movies", "Sony Max", "Pallavi TV"],
-  News: ["Sakshi TV", "TV9 Telugu", "NTV", "V6 News", "ABN", "HMTV", "CVR News", "Maha News", "Prime9", "Bharat Today"],
-  Devotional: ["Bhakthi TV"],
-  Kids: ["ETV Plus", "Gemini TV"],
-  Music: ["Studio N", "ETV Plus"],
-};
+// Channel rows for the scrolling marquee — each row scrolls independently
+const channelRows = [
+  [
+    { name: "Star Maa",      logo: "/logos/starmaa.png" },
+    { name: "Zee Telugu",    logo: "/logos/zeetelugu.png" },
+    { name: "ETV Telugu",    logo: "/logos/etv.png" },
+    { name: "Gemini TV",     logo: "/logos/gemini.png" },
+    { name: "Colors Telugu", logo: "/logos/colors.png" },
+    { name: "ETV Plus",      logo: "/logos/etvplus.png" },
+    { name: "Zee Cinemalu",  logo: "/logos/zeetelugu.png" },
+    { name: "Gemini Movies", logo: "/logos/gemini.png" },
+    { name: "Sony Max",      logo: "/logos/sonyliv.png" },
+    { name: "Maa Movies",    logo: "/logos/starmaa.png" },
+    { name: "Star Movies",   logo: "/logos/starmaa.png" },
+    { name: "Star Gold",     logo: "/logos/starmaa.png" },
+  ],
+  [
+    { name: "TV9 Telugu",    logo: "/logos/tv9.png" },
+    { name: "NTV",           logo: "/logos/ntv.png" },
+    { name: "10TV",          logo: "/logos/10tv.png" },
+    { name: "ABN",           logo: "/logos/abn.png" },
+    { name: "HMTV",          logo: "/logos/hmtv.png" },
+    { name: "V6 News",       logo: "/logos/v6.png" },
+    { name: "Sakshi TV",     logo: "/logos/sakshi.png" },
+    { name: "CVR News",      logo: "/logos/cvrnews.png" },
+    { name: "Mahaa TV",      logo: "/logos/mahaa.png" },
+    { name: "Prime9",        logo: "/logos/prime9.png" },
+    { name: "iNews",         logo: "/logos/inews.png" },
+    { name: "Studio N",      logo: "/logos/tv9.png" },
+  ],
+  [
+    { name: "YoYo TV",       logo: "/logos/yoyo.png" },
+    { name: "Bhakthi TV",    logo: "/logos/bhakthi.png" },
+    { name: "T News",        logo: "/logos/tnews.png" },
+    { name: "Disha TV",      logo: "/logos/disha.png" },
+    { name: "Pallavi TV",    logo: "/logos/pallavi.png" },
+    { name: "Aha",           logo: "/logos/aha.png" },
+    { name: "Zee5",          logo: "/logos/zee5.png" },
+    { name: "Hoichoi",       logo: "/logos/hoichoi.png" },
+    { name: "ShemarooMe",    logo: "/logos/shemaroome.png" },
+    { name: "Sun NXT",       logo: "/logos/sunnxt.png" },
+    { name: "Epic On",       logo: "/logos/epicon.png" },
+    { name: "Hungama Play",  logo: "/logos/hungama.png" },
+  ],
+];
 
 const stats = [
   { value: "50,000+", label: "Active Customers", icon: Users },
@@ -196,7 +235,6 @@ export default function Home() {
   const channelInView = useInView(channelRef, { once: true, margin: "-100px" });
   const ottInView = useInView(ottRef, { once: true, margin: "-100px" });
 
-  const [activeChannelTab, setActiveChannelTab] = useState<keyof typeof channelCategories>("Entertainment");
 
   return (
     <div className="w-full">
@@ -389,9 +427,9 @@ export default function Home() {
       </section>
 
       {/* TV CHANNELS */}
-      <section ref={channelRef} className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section ref={channelRef} className="py-20 overflow-hidden">
         <motion.div
-          className="text-center mb-10"
+          className="text-center mb-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           initial={{ opacity: 0, y: 20 }}
           animate={channelInView ? { opacity: 1, y: 0 } : {}}
         >
@@ -402,44 +440,48 @@ export default function Home() {
           <p className="text-muted-foreground">Entertainment, news, movies, devotional and more</p>
         </motion.div>
 
-        {/* Category tabs */}
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
-          {(Object.keys(channelCategories) as (keyof typeof channelCategories)[]).map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActiveChannelTab(cat)}
-              data-testid={`channel-tab-${cat.toLowerCase()}`}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                activeChannelTab === cat
-                  ? "gradient-gold text-background border-0 neon-gold"
-                  : "glass text-muted-foreground hover:text-foreground"
-              }`}
+        <div className="space-y-4">
+          {channelRows.map((row, rowIdx) => (
+            <motion.div
+              key={rowIdx}
+              className="overflow-hidden"
+              initial={{ opacity: 0, x: rowIdx % 2 === 0 ? -40 : 40 }}
+              animate={channelInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: rowIdx * 0.15, duration: 0.6 }}
             >
-              {cat}
-            </button>
+              <div className={`marquee-track ${rowIdx % 2 === 0 ? "animate-marquee-ltr" : "animate-marquee-rtl"}`}>
+                {[...row, ...row].map((ch, i) => (
+                  <div
+                    key={`${ch.name}-${i}`}
+                    className="glass mx-2 rounded-2xl flex flex-col items-center gap-2 p-3 w-24 shrink-0 hover:border-primary/40 transition-all"
+                    data-testid={i < row.length ? `channel-logo-${ch.name.toLowerCase().replace(/ /g, "-")}` : undefined}
+                  >
+                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center">
+                      <img
+                        src={ch.logo}
+                        alt={ch.name}
+                        className="w-full h-full object-contain p-1"
+                        onError={(e) => {
+                          const t = e.currentTarget;
+                          t.style.display = "none";
+                          const fallback = t.nextElementSibling as HTMLElement | null;
+                          if (fallback) fallback.style.display = "flex";
+                        }}
+                      />
+                      <span
+                        className="text-foreground font-bold font-display text-sm hidden w-full h-full items-center justify-center"
+                        aria-hidden="true"
+                      >
+                        {ch.name.charAt(0)}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-center text-muted-foreground font-medium leading-tight line-clamp-2">{ch.name}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
           ))}
         </div>
-
-        <motion.div
-          key={activeChannelTab}
-          className="flex flex-wrap gap-3 justify-center"
-          initial={{ opacity: 0, y: 10 }}
-          animate={channelInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.3 }}
-        >
-          {channelCategories[activeChannelTab].map((ch, i) => (
-            <motion.span
-              key={ch}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.05 }}
-              className="glass px-4 py-2 rounded-full text-sm font-medium text-foreground hover:border-primary/50 hover:text-primary transition-all cursor-default"
-              data-testid={`channel-badge-${ch.toLowerCase().replace(/ /g, "-")}`}
-            >
-              {ch}
-            </motion.span>
-          ))}
-        </motion.div>
       </section>
 
       {/* OTT APPS */}
@@ -456,19 +498,38 @@ export default function Home() {
             </h2>
             <p className="text-muted-foreground">All major streaming platforms included with select plans</p>
           </motion.div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4">
             {ottApps.map((app, i) => (
               <motion.div
                 key={app.name}
-                className="glass rounded-2xl p-4 flex flex-col items-center gap-2 hover:neon-cyan transition-all cursor-default"
+                className="glass rounded-2xl p-4 flex flex-col items-center gap-3 hover:neon-cyan transition-all cursor-default"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={ottInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ delay: i * 0.06 }}
-                whileHover={{ y: -4, scale: 1.05 }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -4, scale: 1.06 }}
                 data-testid={`ott-card-${app.name.toLowerCase().replace(/ /g, "-")}`}
               >
-                <div className={`w-12 h-12 rounded-xl ${app.color} flex items-center justify-center text-white font-bold text-xl font-display`}>
-                  {app.letter}
+                <div
+                  className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center"
+                  style={{ background: app.bg }}
+                >
+                  <img
+                    src={app.logo}
+                    alt={app.name}
+                    className="w-full h-full object-contain p-1.5"
+                    onError={(e) => {
+                      const t = e.currentTarget;
+                      t.style.display = "none";
+                      const fb = t.nextElementSibling as HTMLElement | null;
+                      if (fb) fb.style.display = "flex";
+                    }}
+                  />
+                  <span
+                    className="text-white font-bold font-display text-xl hidden w-full h-full items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    {app.fallback}
+                  </span>
                 </div>
                 <p className="text-xs text-center text-muted-foreground font-medium leading-tight">{app.name}</p>
               </motion.div>
@@ -508,5 +569,3 @@ export default function Home() {
   );
 }
 
-// Need useState import
-import { useState } from "react";
