@@ -11,17 +11,17 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/rudra-logo.jpeg"
-                alt="Rudra Fiber Net"
+                src="/vgiga-logo.jpeg"
+                alt="VGIGA FIBER NET"
                 className="h-12 w-12 rounded-xl object-cover object-center"
               />
               <div>
-                <p className="font-display font-bold gradient-text tracking-wider">RUDRA FIBER NET</p>
+                <p className="font-display font-bold gradient-text tracking-wider">VGIGA FIBER NET</p>
                 <p className="text-xs text-muted-foreground">Ultra Fast Connectivity</p>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Delivering ultra-fast fiber broadband and 1000+ Telugu channels across Andhra Pradesh and Telangana.
+              Delivering ultra-fast fiber broadband and 1000+ Telugu channels across Telangana.
             </p>
             <div className="flex gap-3">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-primary transition-colors">
@@ -33,7 +33,7 @@ export default function Footer() {
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-primary transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="https://wa.me/919640840216" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-[#25D366] transition-colors">
+              <a href="https://wa.me/919948046456" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full glass flex items-center justify-center text-muted-foreground hover:text-[#25D366] transition-colors">
                 <SiWhatsapp className="w-4 h-4" />
               </a>
             </div>
@@ -81,19 +81,19 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Phone className="w-4 h-4 text-primary shrink-0" />
-                <a href="tel:9640840216" className="hover:text-primary transition-colors">9640840216</a>
+                <a href="tel:+919948046456" className="hover:text-primary transition-colors">+91 99480 46456</a>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <SiWhatsapp className="w-4 h-4 text-[#25D366] shrink-0" />
-                <a href="https://wa.me/919640840216" className="hover:text-primary transition-colors">WhatsApp Support</a>
+                <a href="https://wa.me/919948046456" className="hover:text-primary transition-colors">WhatsApp Support</a>
               </li>
               <li className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="w-4 h-4 text-accent shrink-0" />
-                <a href="mailto:support@rudrafibernet.in" className="hover:text-accent transition-colors">support@rudrafibernet.in</a>
+                <a href="mailto:vgigafibernet@gmail.com" className="hover:text-accent transition-colors">vgigafibernet@gmail.com</a>
               </li>
               <li className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 text-chart-3 shrink-0 mt-0.5" />
-                <span>Andhra Pradesh & Telangana, India</span>
+                <span>Telangana, India</span>
               </li>
             </ul>
           </div>
@@ -101,7 +101,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © 2024 Rudra Fiber Net. All rights reserved.
+            © 2026 VGIGA FIBER NET. All rights reserved.
           </p>
           <div className="flex gap-4 text-xs text-muted-foreground">
             <span className="hover:text-primary cursor-pointer transition-colors">Privacy Policy</span>

@@ -62,19 +62,7 @@ export default function Plans() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      {/* Plans banner image */}
-      <motion.div
-        className="mb-12 rounded-3xl overflow-hidden shadow-2xl border border-border/30"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        data-testid="plans-banner"
-      >
-        <img
-          src="/plans-banner.jpeg"
-          alt="TV & Internet Plans — Rudra Fiber Net"
-          className="w-full object-cover"
-        />
-      </motion.div>
+
 
       {/* Header */}
       <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
@@ -199,9 +187,9 @@ export default function Plans() {
               Book Free Consultation
             </Button>
           </Link>
-          <a href="tel:9640840216">
+          <a href="tel:+919948046456">
             <Button variant="outline" className="border-accent/50 text-accent hover:bg-accent/10">
-              Call 9640840216
+              Call +91 99480 46456
             </Button>
           </a>
         </div>

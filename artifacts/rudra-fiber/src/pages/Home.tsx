@@ -244,7 +244,7 @@ export default function Home() {
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <Badge className="mb-6 gradient-cyan border-0 text-background font-semibold px-4 py-1.5 text-xs tracking-widest font-display">
-              ANDHRA PRADESH & TELANGANA
+              TELANGANA
             </Badge>
           </motion.div>
           <motion.h1
@@ -557,9 +557,9 @@ export default function Home() {
                 Book Free Installation
               </Button>
             </Link>
-            <a href="tel:9640840216">
+            <a href="tel:+919948046456">
               <Button size="lg" variant="outline" className="border-accent/50 text-accent hover:bg-accent/10 font-semibold px-10">
-                Call 9640840216
+                Call +91 99480 46456
               </Button>
             </a>
           </div>

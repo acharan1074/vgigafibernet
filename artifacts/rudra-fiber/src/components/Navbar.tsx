@@ -26,13 +26,13 @@ export default function Navbar() {
           <Link href="/" data-testid="nav-logo">
             <div className="flex items-center gap-2.5 cursor-pointer">
               <img
-                src="/rudra-logo.jpeg"
-                alt="Rudra Fiber Net"
+                src="/vgiga-logo.jpeg"
+                alt="VGIGA FIBER NET"
                 className="h-10 w-10 rounded-xl object-cover object-center"
               />
               <div className="leading-tight">
                 <span className="font-display text-sm sm:text-base font-bold gradient-text tracking-wider block">
-                  RUDRA FIBER NET
+                  VGIGA FIBER NET
                 </span>
                 <span className="text-[10px] text-muted-foreground tracking-widest">
                   ULTRA FAST CONNECTIVITY
@@ -62,12 +62,12 @@ export default function Navbar() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <a
-              href="tel:9640840216"
+              href="tel:+919948046456"
               className="hidden sm:flex items-center gap-1.5 text-xs text-accent font-medium hover:text-accent/80 transition-colors"
               data-testid="nav-phone"
             >
               <Phone className="w-3.5 h-3.5" />
-              9640840216
+              +91 99480 46456
             </a>
             <Button variant="ghost" size="icon" onClick={toggle} data-testid="theme-toggle" className="hidden sm:flex">
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}

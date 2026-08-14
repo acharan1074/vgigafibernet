@@ -99,7 +99,7 @@ export default function BookConnection() {
             <p className="text-sm text-muted-foreground">Village: {form.getValues("village")}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="tel:9640840216" className="flex-1">
+            <a href="tel:+919948046456" className="flex-1">
               <Button variant="outline" className="w-full border-primary/40 text-primary hover:bg-primary/10">
                 Call Support
               </Button>

@@ -1,6 +1,6 @@
-# Rudra Fiber Net
+# VGIGA FIBER NET
 
-Full-stack futuristic ISP broadband website for RUDRA FIBER NET — a fiber internet and cable TV provider in Andhra Pradesh & Telangana.
+Full-stack futuristic ISP broadband website for VGIGA FIBER NET — a fiber internet and cable TV provider in Telangana.
 
 ## Run & Operate
 
@@ -39,7 +39,7 @@ Full-stack futuristic ISP broadband website for RUDRA FIBER NET — a fiber inte
 
 - Contract-first API design: OpenAPI spec → Orval codegen → typed React Query hooks + Zod validators
 - OTP auth is demo-only (in-memory store, fixed OTP 123456); in production integrate an SMS gateway
-- Admin panel uses client-side password gate only (demo password: rudra2024); production should use proper auth
+- Admin panel uses client-side password gate only (demo password: Vgigafiber@2026); production should use proper auth
 - Plans are seeded via `pnpm --filter @workspace/db run seed`
 - Frontend uses fallback/hardcoded data when API is unavailable (plans page shows defaults)
 
@@ -51,15 +51,15 @@ Full-stack futuristic ISP broadband website for RUDRA FIBER NET — a fiber inte
 - **Login**: OTP-based login (+91 mobile → 6-digit OTP; demo OTP: 123456)
 - **Customer Portal**: Data usage chart, weekly usage bar chart, support ticket creation
 - **Speed Test**: Animated SVG gauges for download/upload/ping with simulated test
-- **Contact**: Helpline number 9640840216, WhatsApp/Telegram/Email links, contact form
-- **Admin Dashboard** (password: rudra2024): Stats cards, revenue chart, connections/customers/complaints management tables
+- **Contact**: Helpline number +91 99480 46456, WhatsApp/Telegram/Email links, contact form
+- **Admin Dashboard** (password: Vgigafiber@2026): Stats cards, revenue chart, connections/customers/complaints management tables
 
 ## User preferences
 
-- Support phone: 9640840216 / WhatsApp: wa.me/919640840216
+- Support phone: +91 99480 46456 / WhatsApp: wa.me/919948046456
 - Color palette: background hsl(222 47% 8%), primary/gold hsl(38 92% 50%), accent/cyan hsl(185 100% 50%)
 - Font: Orbitron (display/headings) + Inter (body)
-- Service area: Andhra Pradesh & Telangana
+- Service area: Telangana
 
 ## Gotchas
 

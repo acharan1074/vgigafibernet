@@ -23,8 +23,8 @@ const contactMethods = [
   {
     icon: Phone,
     title: "Call Us",
-    value: "9640840216",
-    href: "tel:9640840216",
+    value: "+91 99480 46456",
+    href: "tel:+919948046456",
     desc: "Available 24x7 for support",
     color: "text-primary",
     bg: "bg-primary/10",
@@ -32,8 +32,8 @@ const contactMethods = [
   {
     icon: SiWhatsapp,
     title: "WhatsApp",
-    value: "+91 9640840216",
-    href: "https://wa.me/919640840216",
+    value: "+91 99480 46456",
+    href: "https://wa.me/919948046456",
     desc: "Quick support on WhatsApp",
     color: "text-[#25D366]",
     bg: "bg-green-500/10",
@@ -41,8 +41,8 @@ const contactMethods = [
   {
     icon: Mail,
     title: "Email Us",
-    value: "support@rudrafibernet.in",
-    href: "mailto:support@rudrafibernet.in",
+    value: "vgigafibernet@gmail.com",
+    href: "mailto:vgigafibernet@gmail.com",
     desc: "Response within 24 hours",
     color: "text-accent",
     bg: "bg-accent/10",
@@ -50,8 +50,8 @@ const contactMethods = [
   {
     icon: SiTelegram,
     title: "Telegram",
-    value: "@RudraFiberNet",
-    href: "https://t.me/RudraFiberNet",
+    value: "@VGigaFiberNet",
+    href: "https://t.me/VGigaFiberNet",
     desc: "Get updates and support",
     color: "text-blue-400",
     bg: "bg-blue-400/10",
@@ -96,8 +96,8 @@ export default function Contact() {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 pointer-events-none" />
         <p className="text-sm text-muted-foreground mb-2 font-semibold tracking-widest font-display">HELPLINE NUMBER</p>
-        <a href="tel:9640840216" className="font-display text-4xl sm:text-6xl font-black gradient-text neon-text-gold block hover:opacity-80 transition-opacity" data-testid="contact-phone">
-          9640840216
+        <a href="tel:+919948046456" className="font-display text-4xl sm:text-6xl font-black gradient-text neon-text-gold block hover:opacity-80 transition-opacity" data-testid="contact-phone">
+          +91 99480 46456
         </a>
         <p className="text-muted-foreground mt-2 flex items-center justify-center gap-2">
           <Clock className="w-4 h-4 text-primary" />
@@ -185,7 +185,7 @@ export default function Contact() {
               <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-foreground text-sm">Head Office</p>
-                <p className="text-sm text-muted-foreground">Rudra Fiber Net Pvt. Ltd.<br />Andhra Pradesh & Telangana, India</p>
+                <p className="text-sm text-muted-foreground">VGIGA FIBER NET Pvt. Ltd.<br />Telangana, India</p>
               </div>
             </div>
             <div className="flex gap-3">
@@ -202,7 +202,7 @@ export default function Contact() {
             <div className="absolute inset-0 bg-gradient-to-br from-card to-muted flex items-center justify-center">
               <div className="text-center">
                 <MapPin className="w-12 h-12 text-primary mx-auto mb-3 opacity-50" />
-                <p className="text-muted-foreground text-sm">Andhra Pradesh & Telangana</p>
+                 <p className="text-muted-foreground text-sm">Telangana</p>
                 <p className="text-xs text-muted-foreground mt-1">Service Coverage Area</p>
               </div>
             </div>
@@ -219,7 +219,13 @@ export default function Contact() {
           <div className="glass rounded-2xl p-5">
             <h3 className="font-semibold text-foreground mb-3">Service Coverage</h3>
             <div className="flex flex-wrap gap-2">
-              {["Hyderabad", "Vijayawada", "Visakhapatnam", "Guntur", "Kurnool", "Warangal", "Nellore", "Tirupati", "Karimnagar", "Rajahmundry"].map(area => (
+              {[
+                "Jogipet", "Andole", "Annasagar", "Ramsanpally", "Kichanapally", "Dakoor",
+                "Sangupet", "Almaipet", "Chotakur", "JNTU–Sulthanpur", "Gounglur", "Pulkal",
+                "Vatpally–Gorekal", "Tekmal–Bodamatipally", "GadiPeddapur", "Chilipched–Chandoor",
+                "Shilampally", "Somakkapet", "Faizabad", "Siripura", "BandaPothgal", "Ajjamari",
+                "Rangampet", "Dumpalakunta"
+              ].map(area => (
                 <span key={area} className="glass px-3 py-1 rounded-full text-xs text-muted-foreground flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
                   {area}

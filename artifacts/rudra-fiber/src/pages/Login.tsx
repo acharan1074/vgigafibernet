@@ -85,7 +85,7 @@ export default function Login() {
           >
             <Wifi className="w-10 h-10 text-background" />
           </motion.div>
-          <h1 className="font-display text-2xl font-black gradient-text">RUDRA FIBER NET</h1>
+          <h1 className="font-display text-2xl font-black gradient-text">VGIGA FIBER NET</h1>
           <p className="text-sm text-muted-foreground mt-1">Customer Portal Login</p>
         </div>
 

@@ -22,7 +22,7 @@ const revenueData = [
   { month: "May", revenue: 72000 }, { month: "Jun", revenue: 80000 },
 ];
 
-const ADMIN_PASSWORD = "rudra2024";
+const ADMIN_PASSWORD = "Vgigafiber@2026";
 
 export default function Admin() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem("rudra_admin") === "true");
@@ -100,7 +100,7 @@ export default function Admin() {
           <Button onClick={handleLogin} className="w-full gradient-gold border-0 text-background font-bold neon-gold" data-testid="btn-admin-login">
             Login
           </Button>
-          <p className="text-xs text-muted-foreground mt-4">Demo password: <span className="text-primary">rudra2024</span></p>
+
         </motion.div>
       </div>
     );
@@ -112,7 +112,7 @@ export default function Admin() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-display text-2xl font-black gradient-text">Admin Dashboard</h1>
-          <p className="text-muted-foreground text-sm">RUDRA FIBER NET — Control Panel</p>
+          <p className="text-muted-foreground text-sm">VGIGA FIBER NET — Control Panel</p>
         </div>
         <Button
           variant="ghost"

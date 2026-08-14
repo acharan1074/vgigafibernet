@@ -4,7 +4,7 @@ import { SiWhatsapp } from "react-icons/si";
 export default function WhatsAppButton() {
   return (
     <motion.a
-      href="https://wa.me/919640840216"
+      href="https://wa.me/919948046456"
       target="_blank"
       rel="noopener noreferrer"
       data-testid="whatsapp-float-btn"
