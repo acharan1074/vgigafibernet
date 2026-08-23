@@ -101,24 +101,29 @@ export default function Plans() {
 
       {activeService === "bsnl" ? (
         <motion.div
-          className="glass rounded-3xl p-16 text-center max-w-2xl mx-auto my-12 border border-primary/20 relative overflow-hidden"
+          className="glass rounded-3xl p-8 sm:p-12 text-center max-w-4xl mx-auto my-12 border border-primary/20 relative overflow-hidden"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
-          <motion.div
-            className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/30 mx-auto mb-6 flex items-center justify-center"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            <Wifi className="w-10 h-10 text-primary" />
-          </motion.div>
-          <h2 className="font-display text-3xl font-black text-foreground mb-4">
-            BSNL Fiber <span className="gradient-text">Coming Soon</span>
-          </h2>
-          <p className="text-muted-foreground max-w-md mx-auto text-base leading-relaxed">
-            We are partnering with BSNL to bring high-speed government-grade fiber internet connectivity to your doorstep. Stay tuned for exciting plans and updates!
-          </p>
+          
+          <div className="mb-8">
+            <Badge className="mb-4 gradient-gold border-0 text-background font-display tracking-wider">BSNL PARTNERSHIP</Badge>
+            <h2 className="font-display text-3xl font-black text-foreground mb-3">
+              BSNL Fiber <span className="gradient-text">Plans</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-base">
+              Get high-speed government-grade fiber internet connectivity at your doorstep. Check out the available plans below.
+            </p>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30 max-w-3xl mx-auto">
+            <img
+              src="/bsnl-plans.jpeg"
+              alt="BSNL Fiber Broadband Plans — VGIGA FIBER NET"
+              className="w-full h-auto object-cover"
+            />
+          </div>
         </motion.div>
       ) : (
         <>
