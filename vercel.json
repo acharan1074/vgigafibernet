@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "artifacts/rudra-fiber/dist/public",
   "rewrites": [
     {
       "source": "/api/:path*",
