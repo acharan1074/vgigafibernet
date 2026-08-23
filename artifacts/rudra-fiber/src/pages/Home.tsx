@@ -154,75 +154,7 @@ function FiberBackground() {
   );
 }
 
-function PlanCard({ plan }: { plan: { id: number; name: string; category: string; speed: number; price: number; features: string[]; isPopular: boolean } }) {
-  const categoryColors: Record<string, string> = {
-    sd_tv: "from-blue-500/20 to-cyan-500/20 border-blue-500/30",
-    hd_tv: "from-yellow-500/20 to-orange-500/20 border-yellow-500/30",
-    internet_only: "from-green-500/20 to-teal-500/20 border-green-500/30",
-  };
-  const badgeColors: Record<string, string> = {
-    sd_tv: "bg-blue-500/20 text-blue-300 border-blue-500/30",
-    hd_tv: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
-    internet_only: "bg-green-500/20 text-green-300 border-green-500/30",
-  };
-  const categoryLabels: Record<string, string> = {
-    sd_tv: "SD TV",
-    hd_tv: "HD TV",
-    internet_only: "Internet Only",
-  };
 
-  return (
-    <motion.div
-      whileHover={{ y: -6, scale: 1.02 }}
-      className={`relative rounded-2xl bg-gradient-to-br ${categoryColors[plan.category] || "from-muted/20 to-muted/10 border-border"} border p-6 flex flex-col gap-4 transition-all`}
-      data-testid={`plan-card-${plan.id}`}
-    >
-      {plan.isPopular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="gradient-gold text-background text-xs font-bold px-4 py-1 rounded-full font-display tracking-wider neon-gold">
-            MOST POPULAR
-          </span>
-        </div>
-      )}
-      <div className="flex items-start justify-between">
-        <div>
-          <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${badgeColors[plan.category] || ""}`}>
-            {categoryLabels[plan.category] || plan.category}
-          </span>
-          <p className="mt-2 font-display text-sm font-semibold text-foreground">{plan.name}</p>
-        </div>
-        <div className="text-right">
-          <p className="font-display text-2xl font-bold text-primary">₹{plan.price}</p>
-          <p className="text-xs text-muted-foreground">/month</p>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <Zap className="w-4 h-4 text-yellow-400" />
-        <span className="font-display text-lg font-bold text-foreground">{plan.speed} Mbps</span>
-      </div>
-      <ul className="space-y-1.5 flex-1">
-        {plan.features.slice(0, 4).map((f, i) => (
-          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-            {f}
-          </li>
-        ))}
-      </ul>
-      <div className="flex gap-2 pt-2">
-        <Link href="/book">
-          <Button size="sm" className="flex-1 gradient-gold border-0 text-background font-semibold hover:opacity-90 transition-all" data-testid={`plan-book-${plan.id}`}>
-            Buy Now
-          </Button>
-        </Link>
-        <Link href="/login">
-          <Button size="sm" variant="outline" className="flex-1 border-primary/40 text-primary hover:bg-primary/10" data-testid={`plan-recharge-${plan.id}`}>
-            Recharge
-          </Button>
-        </Link>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Home() {
   const { data: plans } = useListPlans();
@@ -341,7 +273,7 @@ export default function Home() {
       {/* PLANS SECTION */}
       <section ref={plansRef} id="plans" className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={plansInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -350,43 +282,13 @@ export default function Home() {
           <h2 className="font-display text-3xl sm:text-4xl font-black text-foreground mb-3">
             Choose Your <span className="gradient-text">Perfect Plan</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">Affordable high-speed internet and TV packages for every home and business</p>
-        </motion.div>
-
-        {plans && plans.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {plans.map((plan, i) => (
-              <motion.div
-                key={plan.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={plansInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.1 }}
-              >
-                <PlanCard plan={plan} />
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { id: 1, name: "SD Basic", category: "sd_tv", speed: 20, price: 530, features: ["SD TV Channels", "Unlimited Data", "Free Installation", "24x7 Support"], isPopular: false },
-              { id: 2, name: "HD Plus", category: "hd_tv", speed: 30, price: 540, features: ["HD TV Channels", "Unlimited Data", "Free Installation", "OTT Access"], isPopular: true },
-              { id: 3, name: "Net Only", category: "internet_only", speed: 50, price: 390, features: ["No TV", "Unlimited Data", "Free Installation", "24x7 Support"], isPopular: false },
-            ].map((plan, i) => (
-              <motion.div key={plan.id} initial={{ opacity: 0, y: 30 }} animate={plansInView ? { opacity: 1, y: 0 } : {}} transition={{ delay: i * 0.1 }}>
-                <PlanCard plan={plan} />
-              </motion.div>
-            ))}
-          </div>
-        )}
-
-        <div className="text-center mt-8">
+          <p className="text-muted-foreground max-w-xl mx-auto mb-8">Affordable high-speed internet and TV packages for every home and business</p>
           <Link href="/plans">
-            <Button variant="outline" className="border-primary/40 text-primary hover:bg-primary/10" data-testid="view-all-plans-btn">
-              View All Plans <ChevronRight className="w-4 h-4 ml-1" />
+            <Button className="gradient-gold border-0 text-background font-bold neon-gold py-6 px-8 text-base" data-testid="view-all-plans-btn">
+              View All Plans <ChevronRight className="w-5 h-5 ml-1" />
             </Button>
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       {/* FEATURES */}
