@@ -50,6 +50,7 @@ const allFeatures = ["Unlimited Data", "Free Installation", "24x7 Support", "Fib
 export default function Plans() {
   const { data: plans } = useListPlans();
   const displayPlans = plans && plans.length > 0 ? plans : defaultPlans;
+  const [activeService, setActiveService] = useState<"xl_media" | "bsnl">("xl_media");
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const categories = ["all", "sd_tv", "hd_tv", "internet_only"];
@@ -76,101 +77,148 @@ export default function Plans() {
         </p>
       </motion.div>
 
-      {/* Category filter */}
-      <div className="flex flex-wrap gap-3 justify-center mb-12">
-        {categories.map(cat => (
+      {/* Service selection tabs */}
+      <div className="flex justify-center mb-12">
+        <div className="glass p-1.5 rounded-full flex gap-2 border border-border/30 shadow-lg">
           <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            data-testid={`filter-${cat}`}
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
-              activeCategory === cat ? "gradient-gold text-background neon-gold" : "glass text-muted-foreground hover:text-foreground"
+            onClick={() => setActiveService("xl_media")}
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer ${
+              activeService === "xl_media" ? "gradient-gold text-background neon-gold font-bold" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            {cat === "all" ? "All Plans" : planMeta[cat]?.label || cat}
+            XL Media
           </button>
-        ))}
+          <button
+            onClick={() => setActiveService("bsnl")}
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer ${
+              activeService === "bsnl" ? "gradient-gold text-background neon-gold font-bold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            BSNL
+          </button>
+        </div>
       </div>
 
-      {/* Plans grid by category */}
-      {(["sd_tv", "hd_tv", "internet_only"] as const).map(cat => {
-        if (grouped[cat].length === 0) return null;
-        const meta = planMeta[cat];
-        return (
+      {activeService === "bsnl" ? (
+        <motion.div
+          className="glass rounded-3xl p-16 text-center max-w-2xl mx-auto my-12 border border-primary/20 relative overflow-hidden"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
           <motion.div
-            key={cat}
-            className="mb-14"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            className="w-20 h-20 rounded-2xl bg-primary/10 border border-primary/30 mx-auto mb-6 flex items-center justify-center"
+            animate={{ scale: [1, 1.05, 1] }}
+            transition={{ duration: 3, repeat: Infinity }}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className={`w-10 h-10 rounded-xl glass flex items-center justify-center ${meta.badge}`}>
-                <meta.icon className="w-5 h-5" />
-              </div>
-              <div>
-                <h2 className="font-display text-xl font-bold text-foreground">{meta.label}</h2>
-                <p className="text-sm text-muted-foreground">{meta.subtitle}</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {grouped[cat].map((plan, i) => (
-                <motion.div
-                  key={plan.id}
-                  className={`relative rounded-2xl bg-gradient-to-br ${meta.color} border ${meta.border} p-6 flex flex-col gap-5 transition-all hover:scale-[1.02]`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08 }}
-                  whileHover={{ y: -4 }}
-                  data-testid={`plan-detail-${plan.id}`}
-                >
-                  {plan.isPopular && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                      <span className="gradient-gold text-background text-xs font-bold px-4 py-1 rounded-full font-display neon-gold">
-                        MOST POPULAR
-                      </span>
-                    </div>
-                  )}
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <p className="font-display text-base font-semibold text-foreground">{plan.name}</p>
-                      <div className="flex items-center gap-1.5 mt-1">
-                        <Zap className="w-4 h-4 text-yellow-400" />
-                        <span className="font-display text-2xl font-black text-foreground">{plan.speed}</span>
-                        <span className="text-sm text-muted-foreground">Mbps</span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-display text-3xl font-black text-primary">₹{plan.price}</p>
-                      <p className="text-xs text-muted-foreground">/month</p>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 flex-1">
-                    {[...plan.features, ...allFeatures.slice(0, Math.max(0, 5 - plan.features.length))].slice(0, 5).map((f, fi) => (
-                      <li key={fi} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Check className="w-4 h-4 text-primary shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="flex gap-2">
-                    <Link href="/book">
-                      <Button className="flex-1 gradient-gold border-0 text-background font-semibold hover:opacity-90" data-testid={`plan-buy-${plan.id}`}>
-                        Buy Now <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </Link>
-                    <Link href="/login">
-                      <Button variant="outline" className="border-primary/40 text-primary hover:bg-primary/10" data-testid={`plan-recharge-link-${plan.id}`}>
-                        Recharge
-                      </Button>
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <Wifi className="w-10 h-10 text-primary" />
           </motion.div>
-        );
-      })}
+          <h2 className="font-display text-3xl font-black text-foreground mb-4">
+            BSNL Fiber <span className="gradient-text">Coming Soon</span>
+          </h2>
+          <p className="text-muted-foreground max-w-md mx-auto text-base leading-relaxed">
+            We are partnering with BSNL to bring high-speed government-grade fiber internet connectivity to your doorstep. Stay tuned for exciting plans and updates!
+          </p>
+        </motion.div>
+      ) : (
+        <>
+          {/* Category filter */}
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                data-testid={`filter-${cat}`}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all ${
+                  activeCategory === cat ? "gradient-gold text-background neon-gold" : "glass text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {cat === "all" ? "All Plans" : planMeta[cat]?.label || cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Plans grid by category */}
+          {(["sd_tv", "hd_tv", "internet_only"] as const).map(cat => {
+            if (grouped[cat].length === 0) return null;
+            const meta = planMeta[cat];
+            return (
+              <motion.div
+                key={cat}
+                className="mb-14"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`w-10 h-10 rounded-xl glass flex items-center justify-center ${meta.badge}`}>
+                    <meta.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-foreground">{meta.label}</h2>
+                    <p className="text-sm text-muted-foreground">{meta.subtitle}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {grouped[cat].map((plan, i) => (
+                    <motion.div
+                      key={plan.id}
+                      className={`relative rounded-2xl bg-gradient-to-br ${meta.color} border ${meta.border} p-6 flex flex-col gap-5 transition-all hover:scale-[1.02]`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.08 }}
+                      whileHover={{ y: -4 }}
+                      data-testid={`plan-detail-${plan.id}`}
+                    >
+                      {plan.isPopular && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                          <span className="gradient-gold text-background text-xs font-bold px-4 py-1 rounded-full font-display neon-gold">
+                            MOST POPULAR
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <p className="font-display text-base font-semibold text-foreground">{plan.name}</p>
+                          <div className="flex items-center gap-1.5 mt-1">
+                            <Zap className="w-4 h-4 text-yellow-400" />
+                            <span className="font-display text-2xl font-black text-foreground">{plan.speed}</span>
+                            <span className="text-sm text-muted-foreground">Mbps</span>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-display text-3xl font-black text-primary">₹{plan.price}</p>
+                          <p className="text-xs text-muted-foreground">/month</p>
+                        </div>
+                      </div>
+                      <ul className="space-y-2 flex-1">
+                        {[...plan.features, ...allFeatures.slice(0, Math.max(0, 5 - plan.features.length))].slice(0, 5).map((f, fi) => (
+                          <li key={fi} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Check className="w-4 h-4 text-primary shrink-0" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex gap-2">
+                        <Link href="/book">
+                          <Button className="flex-1 gradient-gold border-0 text-background font-semibold hover:opacity-90" data-testid={`plan-buy-${plan.id}`}>
+                            Buy Now <ChevronRight className="w-4 h-4 ml-1" />
+                          </Button>
+                        </Link>
+                        <Link href="/login">
+                          <Button variant="outline" className="border-primary/40 text-primary hover:bg-primary/10" data-testid={`plan-recharge-link-${plan.id}`}>
+                            Recharge
+                          </Button>
+                        </Link>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
+        </>
+      )}
 
       {/* Compare banner */}
       <motion.div
