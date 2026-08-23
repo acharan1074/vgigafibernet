@@ -50,7 +50,7 @@ const allFeatures = ["Unlimited Data", "Free Installation", "24x7 Support", "Fib
 export default function Plans() {
   const { data: plans } = useListPlans();
   const displayPlans = plans && plans.length > 0 ? plans : defaultPlans;
-  const [activeService, setActiveService] = useState<"xl_media" | "bsnl">("xl_media");
+  const [activeService, setActiveService] = useState<"bsnl" | "excell">("bsnl");
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const categories = ["all", "sd_tv", "hd_tv", "internet_only"];
@@ -79,22 +79,24 @@ export default function Plans() {
 
       {/* Service selection tabs */}
       <div className="flex justify-center mb-12">
-        <div className="glass p-1.5 rounded-full flex gap-2 border border-border/30 shadow-lg">
-          <button
-            onClick={() => setActiveService("xl_media")}
-            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer ${
-              activeService === "xl_media" ? "gradient-gold text-background neon-gold font-bold" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            XL Media
-          </button>
+        <div className="glass p-1.5 rounded-full flex gap-3 border border-border/30 shadow-lg">
           <button
             onClick={() => setActiveService("bsnl")}
-            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer ${
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer flex items-center gap-2.5 ${
               activeService === "bsnl" ? "gradient-gold text-background neon-gold font-bold" : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            BSNL
+            <img src="/bsnl-logo.png" alt="BSNL Logo" className="h-6 w-auto object-contain" />
+            <span>BSNL</span>
+          </button>
+          <button
+            onClick={() => setActiveService("excell")}
+            className={`px-6 py-2.5 rounded-full text-sm font-semibold font-display tracking-wider transition-all cursor-pointer flex items-center gap-2.5 ${
+              activeService === "excell" ? "gradient-gold text-background neon-gold font-bold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <img src="/excell-logo.png" alt="Excell Logo" className="h-6 w-auto object-contain rounded-full" />
+            <span>EXCELL</span>
           </button>
         </div>
       </div>
