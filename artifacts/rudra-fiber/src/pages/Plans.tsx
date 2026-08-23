@@ -117,12 +117,21 @@ export default function Plans() {
             </p>
           </div>
 
-          <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30 max-w-3xl mx-auto">
-            <img
-              src="/bsnl-plans.jpeg"
-              alt="BSNL Fiber Broadband Plans — VGIGA FIBER NET"
-              className="w-full h-auto object-cover"
-            />
+          <div className="flex flex-col gap-8 max-w-3xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30">
+              <img
+                src="/bsnl-plans.jpeg"
+                alt="BSNL Fiber Basic Broadband Plans — VGIGA FIBER NET"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30">
+              <img
+                src="/bsnl-plans-2.png"
+                alt="BSNL Fiber Premium Broadband Plans — VGIGA FIBER NET"
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
         </motion.div>
       ) : (
