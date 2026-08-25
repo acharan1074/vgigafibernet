@@ -1,22 +1,55 @@
-import { pgTable, serial, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod/v4";
+import mongoose, { Schema, Document } from "mongoose";
+import { z } from "zod";
 
-export const connectionsTable = pgTable("connections", {
-  id: serial("id").primaryKey(),
-  fullName: text("full_name").notNull(),
-  mobile: text("mobile").notNull(),
-  whatsapp: text("whatsapp"),
-  address: text("address").notNull(),
-  village: text("village").notNull(),
-  pinCode: text("pin_code").notNull(),
-  planId: integer("plan_id"),
-  connectionType: text("connection_type").notNull().default("home"),
-  installationDate: text("installation_date"),
-  status: text("status").notNull().default("pending"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+export const insertConnectionSchema = z.object({
+  fullName: z.string(),
+  mobile: z.string(),
+  whatsapp: z.string().optional().nullable(),
+  address: z.string(),
+  village: z.string(),
+  pinCode: z.string(),
+  planId: z.number().optional().nullable(),
+  connectionType: z.string().default("home"),
+  installationDate: z.string().optional().nullable(),
+  status: z.string().default("pending"),
+});
+export type InsertConnection = z.infer<typeof insertConnectionSchema>;
+
+export interface ConnectionDocument extends Document {
+  fullName: string;
+  mobile: string;
+  whatsapp?: string;
+  address: string;
+  village: string;
+  pinCode: string;
+  planId?: number;
+  connectionType: string;
+  installationDate?: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const connectionSchema = new Schema<ConnectionDocument>({
+  fullName: { type: String, required: true },
+  mobile: { type: String, required: true },
+  whatsapp: { type: String },
+  address: { type: String, required: true },
+  village: { type: String, required: true },
+  pinCode: { type: String, required: true },
+  planId: { type: Number },
+  connectionType: { type: String, default: "home" },
+  installationDate: { type: String },
+  status: { type: String, default: "pending" },
+}, { timestamps: true });
+
+connectionSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret: any) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+  }
 });
 
-export const insertConnectionSchema = createInsertSchema(connectionsTable).omit({ id: true, createdAt: true, status: true });
-export type InsertConnection = z.infer<typeof insertConnectionSchema>;
-export type Connection = typeof connectionsTable.$inferSelect;
+export const Connection = mongoose.models.Connection || mongoose.model<ConnectionDocument>("Connection", connectionSchema);

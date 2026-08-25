@@ -1,30 +1,33 @@
 import { Router } from "express";
-import { db, connectionsTable, customersTable, complaintsTable } from "@workspace/db";
-import { count, eq, sql } from "drizzle-orm";
+import { Connection, Customer, Complaint } from "@workspace/db";
 
 const router = Router();
 
 router.get("/admin/stats", async (req, res) => {
   try {
-    const [totalCustomers] = await db.select({ count: count() }).from(customersTable);
-    const [activeConnections] = await db.select({ count: count() }).from(customersTable).where(eq(customersTable.status, "active"));
-    const [pendingRequests] = await db.select({ count: count() }).from(connectionsTable).where(eq(connectionsTable.status, "pending"));
-    const [openComplaints] = await db.select({ count: count() }).from(complaintsTable).where(eq(complaintsTable.status, "open"));
+    const totalCustomers = await Customer.countDocuments();
+    const activeConnections = await Customer.countDocuments({ status: "active" });
+    const pendingRequests = await Connection.countDocuments({ status: "pending" });
+    const openComplaints = await Complaint.countDocuments({ status: "open" });
 
     // Simple monthly revenue estimate: active customers * avg plan price
-    const monthlyRevenue = (activeConnections?.count ?? 0) * 520;
+    const monthlyRevenue = activeConnections * 520;
 
     // New connections this month
-    const [newConnections] = await db.select({ count: count() }).from(connectionsTable)
-      .where(sql`created_at >= date_trunc('month', now())`);
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    const newConnectionsThisMonth = await Connection.countDocuments({
+      createdAt: { $gte: startOfMonth }
+    });
 
     res.json({
-      totalCustomers: totalCustomers?.count ?? 0,
-      activeConnections: activeConnections?.count ?? 0,
-      pendingRequests: pendingRequests?.count ?? 0,
-      openComplaints: openComplaints?.count ?? 0,
+      totalCustomers,
+      activeConnections,
+      pendingRequests,
+      openComplaints,
       monthlyRevenue,
-      newConnectionsThisMonth: newConnections?.count ?? 0,
+      newConnectionsThisMonth,
     });
   } catch (err) {
     req.log.error({ err }, "Failed to get admin stats");

@@ -1,18 +1,43 @@
-import { pgTable, serial, text, integer, boolean, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod/v4";
+import mongoose, { Schema, Document } from "mongoose";
+import { z } from "zod";
 
-export const plansTable = pgTable("plans", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  category: text("category").notNull(), // sd_tv | hd_tv | internet_only
-  speed: integer("speed").notNull(),
-  price: integer("price").notNull(),
-  features: text("features").array().notNull().default([]),
-  isPopular: boolean("is_popular").notNull().default(false),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+export const insertPlanSchema = z.object({
+  name: z.string(),
+  category: z.string(),
+  speed: z.number(),
+  price: z.number(),
+  features: z.array(z.string()).default([]),
+  isPopular: z.boolean().default(false),
+});
+export type InsertPlan = z.infer<typeof insertPlanSchema>;
+
+export interface PlanDocument extends Document {
+  name: string;
+  category: string;
+  speed: number;
+  price: number;
+  features: string[];
+  isPopular: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const planSchema = new Schema<PlanDocument>({
+  name: { type: String, required: true },
+  category: { type: String, required: true },
+  speed: { type: Number, required: true },
+  price: { type: Number, required: true },
+  features: { type: [String], default: [] },
+  isPopular: { type: Boolean, default: false },
+}, { timestamps: true });
+
+planSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret: any) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+  }
 });
 
-export const insertPlanSchema = createInsertSchema(plansTable).omit({ id: true, createdAt: true });
-export type InsertPlan = z.infer<typeof insertPlanSchema>;
-export type Plan = typeof plansTable.$inferSelect;
+export const Plan = mongoose.models.Plan || mongoose.model<PlanDocument>("Plan", planSchema);

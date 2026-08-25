@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { db, customersTable } from "@workspace/db";
+import { Customer } from "@workspace/db";
 import { SendOtpBody, VerifyOtpBody } from "@workspace/api-zod";
-import { eq } from "drizzle-orm";
 
 const router = Router();
 
@@ -38,9 +37,9 @@ router.post("/auth/otp/verify", async (req, res) => {
     otpStore.delete(parsed.data.mobile);
 
     // Find or create customer
-    let customer = await db.select().from(customersTable).where(eq(customersTable.mobile, parsed.data.mobile)).then(r => r[0]);
+    let customer = await Customer.findOne({ mobile: parsed.data.mobile });
     if (!customer) {
-      const [newCustomer] = await db.insert(customersTable).values({
+      customer = await Customer.create({
         fullName: "New Customer",
         mobile: parsed.data.mobile,
         address: "",
@@ -49,12 +48,12 @@ router.post("/auth/otp/verify", async (req, res) => {
         status: "active",
         dataUsedGB: 0,
         dataLimitGB: 100,
-      }).returning();
-      customer = newCustomer;
+      });
     }
 
-    const token = Buffer.from(`${customer.id}:${customer.mobile}:${Date.now()}`).toString("base64");
-    res.json({ token, customer });
+    const customerJson = customer.toJSON();
+    const token = Buffer.from(`${customerJson.id}:${customerJson.mobile}:${Date.now()}`).toString("base64");
+    res.json({ token, customer: customerJson });
   } catch (err) {
     req.log.error({ err }, "Failed to verify OTP");
     res.status(500).json({ error: "Failed to verify OTP" });

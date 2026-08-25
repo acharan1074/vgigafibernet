@@ -1,19 +1,46 @@
-import { pgTable, serial, text, integer, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
-import { z } from "zod/v4";
+import mongoose, { Schema, Document } from "mongoose";
+import { z } from "zod";
 
-export const complaintsTable = pgTable("complaints", {
-  id: serial("id").primaryKey(),
-  customerId: integer("customer_id"),
-  name: text("name").notNull(),
-  mobile: text("mobile").notNull(),
-  subject: text("subject").notNull(),
-  description: text("description").notNull(),
-  status: text("status").notNull().default("open"),
-  priority: text("priority").notNull().default("medium"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+export const insertComplaintSchema = z.object({
+  customerId: z.number().optional().nullable(),
+  name: z.string(),
+  mobile: z.string(),
+  subject: z.string(),
+  description: z.string(),
+  status: z.string().default("open"),
+  priority: z.string().default("medium"),
+});
+export type InsertComplaint = z.infer<typeof insertComplaintSchema>;
+
+export interface ComplaintDocument extends Document {
+  customerId?: number;
+  name: string;
+  mobile: string;
+  subject: string;
+  description: string;
+  status: string;
+  priority: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const complaintSchema = new Schema<ComplaintDocument>({
+  customerId: { type: Number },
+  name: { type: String, required: true },
+  mobile: { type: String, required: true },
+  subject: { type: String, required: true },
+  description: { type: String, required: true },
+  status: { type: String, default: "open" },
+  priority: { type: String, default: "medium" },
+}, { timestamps: true });
+
+complaintSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret: any) {
+    ret.id = ret._id.toString();
+    delete ret._id;
+  }
 });
 
-export const insertComplaintSchema = createInsertSchema(complaintsTable).omit({ id: true, createdAt: true, status: true });
-export type InsertComplaint = z.infer<typeof insertComplaintSchema>;
-export type Complaint = typeof complaintsTable.$inferSelect;
+export const Complaint = mongoose.models.Complaint || mongoose.model<ComplaintDocument>("Complaint", complaintSchema);

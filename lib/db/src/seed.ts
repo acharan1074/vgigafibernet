@@ -1,14 +1,14 @@
-import { db } from "./index.js";
-import { plansTable } from "./schema/index.js";
+import { connectDB, Plan } from "./index.js";
 
 async function seed() {
-  const existing = await db.select().from(plansTable);
+  await connectDB();
+  const existing = await Plan.find();
   if (existing.length > 0) {
     console.log(`Already have ${existing.length} plans, skipping seed.`);
     process.exit(0);
   }
 
-  await db.insert(plansTable).values([
+  await Plan.insertMany([
     { name: "SD 20 Mbps", category: "sd_tv", speed: 20, price: 530, features: ["SD TV Channels", "Unlimited Data", "Free Installation", "24x7 Support", "1000+ Telugu Channels"], isPopular: false },
     { name: "SD 30 Mbps", category: "sd_tv", speed: 30, price: 520, features: ["SD TV Channels", "Unlimited Data", "Free Installation", "24x7 Support", "1000+ Telugu Channels"], isPopular: false },
     { name: "SD 50 Mbps", category: "sd_tv", speed: 50, price: 560, features: ["SD TV Channels", "Unlimited Data", "Free Installation", "24x7 Support", "1000+ Telugu Channels"], isPopular: false },

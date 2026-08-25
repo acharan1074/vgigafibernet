@@ -45,12 +45,23 @@ const defaultPlans = [
   { id: 9, name: "Net 50 Mbps", category: "internet_only", speed: 50, price: 390, isPopular: false, features: ["No TV Channels", "Unlimited Data", "Free Installation", "24x7 Support"] },
 ];
 
+const bsnlPlans = [
+  { id: 101, name: "FIBER HOME", category: "internet_only", speed: 40, price: 399, isPopular: false, features: ["1400 GB Data at 40 Mbps", "4 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+  { id: 102, name: "FIBER BASIC", category: "internet_only", speed: 60, price: 499, isPopular: true, features: ["3300 GB Data at 60 Mbps", "4 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+  { id: 103, name: "FIBER BASIC PLUS", category: "internet_only", speed: 100, price: 599, isPopular: false, features: ["4000 GB Data at 100 Mbps", "4 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+  { id: 104, name: "FIBER TB", category: "internet_only", speed: 150, price: 799, isPopular: false, features: ["4000 GB Data at 150 Mbps", "10 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+  { id: 105, name: "SUPER STAR PREMIUM PLUS", category: "internet_only", speed: 200, price: 999, isPopular: true, features: ["5000 GB Data at 200 Mbps", "10 Mbps after FUP", "JioHotstar OTT Free", "Unlimited Calls"] },
+  { id: 106, name: "FIBER PREMIUM PLUS", category: "internet_only", speed: 250, price: 1499, isPopular: false, features: ["6000 GB Data at 250 Mbps", "15 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+  { id: 107, name: "FIBER ULTRA", category: "internet_only", speed: 300, price: 1799, isPopular: false, features: ["6500 GB Data at 300 Mbps", "20 Mbps after FUP", "Unlimited Local & STD Calls", "Free Installation"] },
+];
+
 const allFeatures = ["Unlimited Data", "Free Installation", "24x7 Support", "Fiber Connection", "Static IP Option", "Multi-device Support"];
 
 export default function Plans() {
   const { data: plans } = useListPlans();
-  const displayPlans = plans && plans.length > 0 ? plans : defaultPlans;
   const [activeService, setActiveService] = useState<"bsnl" | "excell">("bsnl");
+  const excellPlans = plans && plans.length > 0 ? plans : defaultPlans;
+  const displayPlans = activeService === "excell" ? excellPlans : bsnlPlans;
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const categories = ["all", "sd_tv", "hd_tv", "internet_only"];
@@ -101,43 +112,7 @@ export default function Plans() {
         </div>
       </div>
 
-      {activeService === "bsnl" ? (
-        <motion.div
-          className="glass rounded-3xl p-8 sm:p-12 text-center max-w-4xl mx-auto my-12 border border-primary/20 relative overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 pointer-events-none" />
-          
-          <div className="mb-8">
-            <Badge className="mb-4 gradient-gold border-0 text-background font-display tracking-wider">BSNL PARTNERSHIP</Badge>
-            <h2 className="font-display text-3xl font-black text-foreground mb-3">
-              BSNL Fiber <span className="gradient-text">Plans</span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-base">
-              Get high-speed government-grade fiber internet connectivity at your doorstep. Check out the available plans below.
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-8 max-w-3xl mx-auto">
-            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30">
-              <img
-                src="/bsnl-plans.jpeg"
-                alt="BSNL Fiber Basic Broadband Plans — VGIGA FIBER NET"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border/30">
-              <img
-                src="/bsnl-plans-2.png"
-                alt="BSNL Fiber Premium Broadband Plans — VGIGA FIBER NET"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-          </div>
-        </motion.div>
-      ) : (
-        <>
+      <>
           {/* Category filter */}
           <div className="flex flex-wrap gap-3 justify-center mb-12">
             {categories.map(cat => (
@@ -234,7 +209,6 @@ export default function Plans() {
             );
           })}
         </>
-      )}
 
       {/* Compare banner */}
       <motion.div
