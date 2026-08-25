@@ -1,14 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "api/**/*.ts",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -19,5 +9,5 @@
       "destination": "/index.html"
     }
   ],
-  "installCommand": "pnpm install --no-frozen-lockfile"
+  "installCommand": "corepack enable && corepack prepare pnpm@10.23.0 --activate && pnpm install --frozen-lockfile"
 }
