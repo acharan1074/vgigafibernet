@@ -1,4 +1,7 @@
 {
+  "buildCommand": "pnpm run build",
+  "installCommand": "pnpm install",
+  "outputDirectory": "artifacts/rudra-fiber/dist/public",
   "builds": [
     {
       "src": "api/**/*.ts",
