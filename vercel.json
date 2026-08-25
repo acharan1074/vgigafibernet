@@ -1,7 +1,4 @@
 {
-  "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install",
-  "outputDirectory": "artifacts/rudra-fiber/dist/public",
   "builds": [
     {
       "src": "api/**/*.ts",
@@ -9,10 +6,7 @@
     },
     {
       "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "artifacts/rudra-fiber/dist/public"
-      }
+      "use": "@vercel/static-build"
     }
   ],
   "rewrites": [
