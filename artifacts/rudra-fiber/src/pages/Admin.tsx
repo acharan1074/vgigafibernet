@@ -68,10 +68,10 @@ export default function Admin() {
   const updateComplaint = useUpdateComplaint();
   const seedDatabase = useSeedDatabase();
 
-  const displayStats = stats ?? fallbackAdminStats;
-  const displayConnections = connections && connections.length > 0 ? connections : fallbackConnections.filter(connection => !connStatusFilter || connection.status === connStatusFilter);
-  const displayCustomers = customers && customers.length > 0 ? customers : fallbackCustomers.filter(customer => !searchQuery || (customer.fullName && customer.fullName.toLowerCase().includes(searchQuery.toLowerCase())) || (customer.mobile && customer.mobile.includes(searchQuery)));
-  const displayComplaints = complaints && complaints.length > 0 ? complaints : fallbackComplaints.filter(complaint => !complaintStatusFilter || complaint.status === complaintStatusFilter);
+  const displayStats = (stats && typeof stats === 'object') ? stats : fallbackAdminStats;
+  const displayConnections = Array.isArray(connections) && connections.length > 0 ? connections : fallbackConnections.filter(connection => !connStatusFilter || connection.status === connStatusFilter);
+  const displayCustomers = Array.isArray(customers) && customers.length > 0 ? customers : fallbackCustomers.filter(customer => !searchQuery || (customer.fullName && customer.fullName.toLowerCase().includes(searchQuery.toLowerCase())) || (customer.mobile && customer.mobile.includes(searchQuery)));
+  const displayComplaints = Array.isArray(complaints) && complaints.length > 0 ? complaints : fallbackComplaints.filter(complaint => !complaintStatusFilter || complaint.status === complaintStatusFilter);
 
   const handleLogin = () => {
     if (pwd === ADMIN_PASSWORD) {

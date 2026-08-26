@@ -68,7 +68,7 @@ const normalizePlanCategory = (category?: string) => {
 export default function Plans() {
   const { data: plans } = useListPlans();
   const [activeService, setActiveService] = useState<"bsnl" | "excell">("bsnl");
-  const excellPlans = plans && plans.length > 0
+  const excellPlans = Array.isArray(plans) && plans.length > 0
     ? plans.map(plan => ({ 
         ...plan, 
         category: normalizePlanCategory(plan.category),
