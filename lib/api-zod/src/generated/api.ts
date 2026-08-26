@@ -261,3 +261,12 @@ export const GetAdminStatsResponse = zod.object({
 })
 
 
+/**
+ * @summary Seed database with dummy data
+ */
+export const SeedDatabaseResponse = zod.object({
+  "success": zod.boolean().optional(),
+  "message": zod.string().optional()
+})
+
+

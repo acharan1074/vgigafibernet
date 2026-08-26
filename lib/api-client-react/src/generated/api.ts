@@ -36,7 +36,8 @@ import type {
   OtpRequest,
   OtpResponse,
   OtpVerify,
-  Plan
+  Plan,
+  SeedDatabase200
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -1038,4 +1039,74 @@ export function useGetAdminStats<TData = Awaited<ReturnType<typeof getAdminStats
 
 
 
+
+export const getSeedDatabaseUrl = () => {
+
+
+
+
+  return `/api/admin/seed`
+}
+
+/**
+ * @summary Seed database with dummy data
+ */
+export const seedDatabase = async ( options?: RequestInit): Promise<SeedDatabase200> => {
+
+  return customFetch<SeedDatabase200>(getSeedDatabaseUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+export const getSeedDatabaseMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof seedDatabase>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof seedDatabase>>, TError,void, TContext> => {
+
+const mutationKey = ['seedDatabase'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof seedDatabase>>, void> = () => {
+
+
+          return  seedDatabase(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SeedDatabaseMutationResult = NonNullable<Awaited<ReturnType<typeof seedDatabase>>>
+
+    export type SeedDatabaseMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Seed database with dummy data
+ */
+export const useSeedDatabase = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof seedDatabase>>, TError,void, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof seedDatabase>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getSeedDatabaseMutationOptions(options));
+    }
 

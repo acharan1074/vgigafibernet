@@ -11,6 +11,7 @@ import {
   useListCustomers,
   useListComplaints, getListComplaintsQueryKey,
   useUpdateComplaint,
+  useSeedDatabase
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, CartesianGrid } from "recharts";
@@ -65,6 +66,7 @@ export default function Admin() {
   );
   const updateConnection = useUpdateConnection();
   const updateComplaint = useUpdateComplaint();
+  const seedDatabase = useSeedDatabase();
 
   const displayStats = stats ?? fallbackAdminStats;
   const displayConnections = connections && connections.length > 0 ? connections : fallbackConnections.filter(connection => !connStatusFilter || connection.status === connStatusFilter);
@@ -79,6 +81,18 @@ export default function Admin() {
       setPwdError(true);
       setTimeout(() => setPwdError(false), 2000);
     }
+  };
+
+  const handleSeed = () => {
+    seedDatabase.mutate(undefined, {
+      onSuccess: () => {
+        toast({ title: "Success", description: "Database seeded with default data!" });
+        queryClient.invalidateQueries();
+      },
+      onError: () => {
+        toast({ title: "Error", description: "Failed to seed database.", variant: "destructive" });
+      }
+    });
   };
 
   const handleConnectionStatus = (id: number, status: string) => {
@@ -139,15 +153,26 @@ export default function Admin() {
           <h1 className="font-display text-2xl font-black gradient-text">Admin Dashboard</h1>
           <p className="text-muted-foreground text-sm">VGIGA FIBER NET — Control Panel</p>
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => { sessionStorage.removeItem("rudra_admin"); setAuthed(false); }}
-          className="text-muted-foreground hover:text-destructive"
-          data-testid="btn-admin-logout"
-        >
-          Logout
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleSeed}
+            disabled={seedDatabase.isPending}
+            className="text-primary border-primary/40 hover:bg-primary/10"
+          >
+            {seedDatabase.isPending ? "Seeding..." : "Seed Database"}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => { sessionStorage.removeItem("rudra_admin"); setAuthed(false); }}
+            className="text-muted-foreground hover:text-destructive"
+            data-testid="btn-admin-logout"
+          >
+            Logout
+          </Button>
+        </div>
       </div>
 
       {/* Stats cards */}

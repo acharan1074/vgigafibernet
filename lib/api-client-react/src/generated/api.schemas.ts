@@ -148,3 +148,8 @@ export type ListComplaintsParams = {
 status?: string;
 };
 
+export type SeedDatabase200 = {
+  success?: boolean;
+  message?: string;
+};
+

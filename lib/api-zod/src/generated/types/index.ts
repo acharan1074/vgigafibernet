@@ -23,3 +23,4 @@ export * from './otpRequest';
 export * from './otpResponse';
 export * from './otpVerify';
 export * from './plan';
+export * from './seedDatabase200';

@@ -258,11 +258,27 @@ paths:
       summary: Get admin dashboard statistics
       responses:
         "200":
-          description: Admin stats
+          description: Admin stats retrieved successfully
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AdminStats"
+  /admin/seed:
+    post:
+      summary: Seed database with dummy data
+      operationId: seedDatabase
+      responses:
+        "200":
+          description: Database seeded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
 
 components:
   schemas:
