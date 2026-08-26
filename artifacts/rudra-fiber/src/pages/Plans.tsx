@@ -57,10 +57,19 @@ const bsnlPlans = [
 
 const allFeatures = ["Unlimited Data", "Free Installation", "24x7 Support", "Fiber Connection", "Static IP Option", "Multi-device Support"];
 
+const normalizePlanCategory = (category: string) => {
+  const normalized = category.toLowerCase().replace(/[^a-z]/g, "");
+  if (normalized.includes("hd")) return "hd_tv";
+  if (normalized.includes("sd")) return "sd_tv";
+  return "internet_only";
+};
+
 export default function Plans() {
   const { data: plans } = useListPlans();
   const [activeService, setActiveService] = useState<"bsnl" | "excell">("bsnl");
-  const excellPlans = plans && plans.length > 0 ? plans : defaultPlans;
+  const excellPlans = plans && plans.length > 0
+    ? plans.map(plan => ({ ...plan, category: normalizePlanCategory(plan.category) }))
+    : defaultPlans;
   const displayPlans = activeService === "excell" ? excellPlans : bsnlPlans;
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
