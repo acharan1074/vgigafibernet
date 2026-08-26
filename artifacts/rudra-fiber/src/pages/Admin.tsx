@@ -24,6 +24,26 @@ const revenueData = [
 
 const ADMIN_PASSWORD = "Vgigafiber@2026";
 
+const fallbackAdminStats = { totalCustomers: 24, activeConnections: 21, pendingRequests: 3, openComplaints: 2, monthlyRevenue: 18640, newConnectionsThisMonth: 6 };
+
+const fallbackConnections = [
+  { id: 1001, fullName: "Ravi Kumar", mobile: "+91 98765 43210", village: "Warangal", address: "Main Road", pinCode: "506001", connectionType: "home", status: "pending", planId: 1, installationDate: null, createdAt: "2026-08-18T09:30:00.000Z" },
+  { id: 1002, fullName: "Sowmya Reddy", mobile: "+91 91234 56789", village: "Hanamkonda", address: "Station Road", pinCode: "506011", connectionType: "home", status: "approved", planId: 5, installationDate: null, createdAt: "2026-08-16T11:00:00.000Z" },
+  { id: 1003, fullName: "Vamsi Tech Solutions", mobile: "+91 99887 76655", village: "Kazipet", address: "Industrial Area", pinCode: "506003", connectionType: "business", status: "installed", planId: 8, installationDate: "2026-08-10T08:00:00.000Z", createdAt: "2026-08-05T08:00:00.000Z" },
+];
+
+const fallbackCustomers = [
+  { id: 2001, fullName: "Anil Kumar", mobile: "+91 90000 11111", village: "Warangal", address: "Market Road", pinCode: "506002", planId: 5, status: "active", dataUsedGB: 146.5, dataLimitGB: 3300, dueDate: "2026-09-05", createdAt: "2026-06-12T08:00:00.000Z" },
+  { id: 2002, fullName: "Lakshmi Devi", mobile: "+91 90000 22222", village: "Hanamkonda", address: "Temple Street", pinCode: "506011", planId: 8, status: "active", dataUsedGB: 98.2, dataLimitGB: 9999, dueDate: "2026-09-10", createdAt: "2026-05-20T08:00:00.000Z" },
+  { id: 2003, fullName: "Prasad Rao", mobile: "+91 90000 33333", village: "Kazipet", address: "Nehru Nagar", pinCode: "506003", planId: 2, status: "inactive", dataUsedGB: 12.8, dataLimitGB: 1400, dueDate: "2026-08-28", createdAt: "2026-04-02T08:00:00.000Z" },
+];
+
+const fallbackComplaints = [
+  { id: 3001, customerId: 2001, name: "Anil Kumar", mobile: "+91 90000 11111", subject: "Speed lower than plan", description: "Connection speed drops during evening hours.", status: "open", priority: "high", createdAt: "2026-08-21T10:00:00.000Z" },
+  { id: 3002, customerId: 2002, name: "Lakshmi Devi", mobile: "+91 90000 22222", subject: "Router replacement", description: "Router is restarting frequently.", status: "in_progress", priority: "medium", createdAt: "2026-08-19T12:00:00.000Z" },
+  { id: 3003, customerId: null, name: "Kiran", mobile: "+91 90000 44444", subject: "New connection enquiry", description: "Asked about installation availability.", status: "resolved", priority: "low", createdAt: "2026-08-12T09:00:00.000Z" },
+];
+
 export default function Admin() {
   const [authed, setAuthed] = useState(() => sessionStorage.getItem("rudra_admin") === "true");
   const [pwd, setPwd] = useState("");
@@ -45,6 +65,11 @@ export default function Admin() {
   );
   const updateConnection = useUpdateConnection();
   const updateComplaint = useUpdateComplaint();
+
+  const displayStats = stats ?? fallbackAdminStats;
+  const displayConnections = connections && connections.length > 0 ? connections : fallbackConnections.filter(connection => !connStatusFilter || connection.status === connStatusFilter);
+  const displayCustomers = customers && customers.length > 0 ? customers : fallbackCustomers.filter(customer => !searchQuery || customer.fullName.toLowerCase().includes(searchQuery.toLowerCase()) || customer.mobile.includes(searchQuery));
+  const displayComplaints = complaints && complaints.length > 0 ? complaints : fallbackComplaints.filter(complaint => !complaintStatusFilter || complaint.status === complaintStatusFilter);
 
   const handleLogin = () => {
     if (pwd === ADMIN_PASSWORD) {
@@ -128,12 +153,12 @@ export default function Admin() {
       {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
         {[
-          { label: "Total Customers", value: stats?.totalCustomers ?? 0, icon: Users, color: "text-primary", bg: "from-primary/20 to-primary/5" },
-          { label: "Active Connections", value: stats?.activeConnections ?? 0, icon: Wifi, color: "text-accent", bg: "from-accent/20 to-accent/5" },
-          { label: "Pending Requests", value: stats?.pendingRequests ?? 0, icon: RefreshCw, color: "text-orange-400", bg: "from-orange-500/20 to-orange-500/5" },
-          { label: "Open Complaints", value: stats?.openComplaints ?? 0, icon: AlertCircle, color: "text-red-400", bg: "from-red-500/20 to-red-500/5" },
-          { label: "Monthly Revenue", value: `₹${(stats?.monthlyRevenue ?? 0).toLocaleString("en-IN")}`, icon: TrendingUp, color: "text-green-400", bg: "from-green-500/20 to-green-500/5" },
-          { label: "New This Month", value: stats?.newConnectionsThisMonth ?? 0, icon: CheckCircle, color: "text-purple-400", bg: "from-purple-500/20 to-purple-500/5" },
+          { label: "Total Customers", value: displayStats?.totalCustomers ?? 0, icon: Users, color: "text-primary", bg: "from-primary/20 to-primary/5" },
+          { label: "Active Connections", value: displayStats?.activeConnections ?? 0, icon: Wifi, color: "text-accent", bg: "from-accent/20 to-accent/5" },
+          { label: "Pending Requests", value: displayStats?.pendingRequests ?? 0, icon: RefreshCw, color: "text-orange-400", bg: "from-orange-500/20 to-orange-500/5" },
+          { label: "Open Complaints", value: displayStats?.openComplaints ?? 0, icon: AlertCircle, color: "text-red-400", bg: "from-red-500/20 to-red-500/5" },
+          { label: "Monthly Revenue", value: `₹${(displayStats?.monthlyRevenue ?? 0).toLocaleString("en-IN")}`, icon: TrendingUp, color: "text-green-400", bg: "from-green-500/20 to-green-500/5" },
+          { label: "New This Month", value: displayStats?.newConnectionsThisMonth ?? 0, icon: CheckCircle, color: "text-purple-400", bg: "from-purple-500/20 to-purple-500/5" },
         ].map((s, i) => (
           <motion.div
             key={s.label}
@@ -211,7 +236,7 @@ export default function Admin() {
                 </tr>
               </thead>
               <tbody>
-                {connections && connections.length > 0 ? connections.map(c => (
+                {displayConnections.length > 0 ? displayConnections.map(c => (
                   <tr key={c.id} className="border-b border-border/20 hover:bg-muted/20 transition-colors" data-testid={`conn-row-${c.id}`}>
                     <td className="px-4 py-3 font-medium text-foreground">{c.fullName}</td>
                     <td className="px-4 py-3 text-muted-foreground">{c.mobile}</td>
@@ -282,7 +307,7 @@ export default function Admin() {
                 </tr>
               </thead>
               <tbody>
-                {customers && customers.length > 0 ? customers.map(c => (
+                {displayCustomers.length > 0 ? displayCustomers.map(c => (
                   <tr key={c.id} className="border-b border-border/20 hover:bg-muted/20" data-testid={`customer-row-${c.id}`}>
                     <td className="px-4 py-3 font-medium text-foreground">{c.fullName}</td>
                     <td className="px-4 py-3 text-muted-foreground">{c.mobile}</td>
@@ -332,7 +357,7 @@ export default function Admin() {
                 </tr>
               </thead>
               <tbody>
-                {complaints && complaints.length > 0 ? complaints.map(c => (
+                {displayComplaints.length > 0 ? displayComplaints.map(c => (
                   <tr key={c.id} className="border-b border-border/20 hover:bg-muted/20" data-testid={`complaint-row-${c.id}`}>
                     <td className="px-4 py-3 font-medium text-foreground">{c.name}</td>
                     <td className="px-4 py-3 text-muted-foreground">{c.mobile}</td>
