@@ -1,6 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <defs><linearGradient id="g_bhakthi" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D97706"/><stop offset="100%" stop-color="#78350F"/></linearGradient></defs>
-  <rect width="100" height="100" rx="18" fill="url(#g_bhakthi)"/>
-  <text x="50" y="46" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="17" fill="#fff" text-anchor="middle">BHAKTHI</text>
-  <text x="50" y="66" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="#fff" text-anchor="middle">TV</text>
+  <defs>
+    <linearGradient id="bk_bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6B00"/><stop offset="100%" stop-color="#802000"/></linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="url(#bk_bg)"/>
+  <circle cx="50" cy="38" r="20" fill="#FFD700"/>
+  <text x="50" y="47" font-family="'Segoe UI', sans-serif" font-weight="900" font-size="24" fill="#802000" text-anchor="middle">ॐ</text>
+  <text x="50" y="74" font-family="'Inter', sans-serif" font-weight="900" font-size="11" fill="#FFFFFF" text-anchor="middle">BHAKTHI TV</text>
+  <text x="50" y="86" font-family="'Inter', sans-serif" font-weight="800" font-size="9" fill="#FFD700" text-anchor="middle">భక్తి టీవీ</text>
 </svg>

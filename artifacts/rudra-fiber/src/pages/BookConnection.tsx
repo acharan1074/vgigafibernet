@@ -90,7 +90,7 @@ export default function BookConnection() {
 
   // Merge API plans with hardcoded fallback list
   const plans = (apiPlans && apiPlans.length > 0)
-    ? apiPlans.map(p => ({ id: p.id, name: p.name, speed: p.speed, price: p.price }))
+    ? apiPlans.map((p: any) => ({ id: p.id, name: p.name, speed: p.speed, price: p.price }))
     : FALLBACK_PLANS;
 
   const form = useForm<FormValues>({

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="sv_bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#800080"/><stop offset="100%" stop-color="#330033"/></linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="url(#sv_bg)"/>
+  <path d="M50 16l4 10 11 1-8 7 2 11-9-5-9 5 2-11-8-7 11-1z" fill="#FFD700"/>
+  <text x="50" y="62" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#FFFFFF" text-anchor="middle">STAR</text>
+  <text x="50" y="80" font-family="'Inter', sans-serif" font-weight="900" font-size="14" fill="#FFD700" text-anchor="middle">VIJAY</text>
+</svg>

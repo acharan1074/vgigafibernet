@@ -28,65 +28,65 @@ const features = [
 ];
 
 const ottApps = [
-  { name: "Netflix",         logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png",                                                                           fallback: "N", bg: "#E50914" },
-  { name: "Prime Video",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Amazon_Prime_Video_logo.svg/640px-Amazon_Prime_Video_logo.svg.png",              fallback: "P", bg: "#00A8E1" },
-  { name: "JioHotstar",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Jio_Hotstar_logo.svg/640px-Jio_Hotstar_logo.svg.png",                           fallback: "H", bg: "#1C1C76" },
-  { name: "Aha",             logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Aha_OTT_logo.png/640px-Aha_OTT_logo.png",                                      fallback: "A", bg: "#CF0001" },
-  { name: "Sun NXT",         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Sun_NXT_logo.svg/640px-Sun_NXT_logo.svg.png",                                   fallback: "S", bg: "#FF6B00" },
-  { name: "ZEE5",            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ZEE5_logo.svg/640px-ZEE5_logo.svg.png",                                         fallback: "Z", bg: "#6B3FA0" },
-  { name: "Sony LIV",        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Sony_LIV_2020.svg/640px-Sony_LIV_2020.svg.png",                                 fallback: "S", bg: "#0060FF" },
-  { name: "JioCinema",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/JioCinema_2023_logo.svg/640px-JioCinema_2023_logo.svg.png",                     fallback: "J", bg: "#0033CC" },
-  { name: "MX Player",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/MX_Player_logo.svg/640px-MX_Player_logo.svg.png",                               fallback: "M", bg: "#01B4E4" },
-  { name: "YouTube",         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/640px-YouTube_full-color_icon_%282017%29.svg.png", fallback: "Y", bg: "#FF0000" },
-  { name: "Manorama MAX",    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Manorama_Max_logo.svg/640px-Manorama_Max_logo.svg.png",                          fallback: "M", bg: "#E31E24" },
-  { name: "Lionsgate Play",  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Lionsgate_Play_logo.svg/640px-Lionsgate_Play_logo.svg.png",                     fallback: "L", bg: "#111827" },
-  { name: "Hungama Play",    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hungama_Play_Logo.svg/640px-Hungama_Play_Logo.svg.png",                          fallback: "H", bg: "#FF0080" },
-  { name: "ShemarooMe",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/ShemarooMe_logo.svg/640px-ShemarooMe_logo.svg.png",                             fallback: "S", bg: "#FF6600" },
+  { name: "Netflix",         logo: "/logos/netflix.svg",      fallback: "N", bg: "#000000" },
+  { name: "Prime Video",     logo: "/logos/primevideo.svg",   fallback: "P", bg: "#0F172A" },
+  { name: "JioHotstar",      logo: "/logos/hotstar.svg",      fallback: "H", bg: "#0F1035" },
+  { name: "Aha",             logo: "/logos/aha.svg",          fallback: "A", bg: "#D92200" },
+  { name: "Sun NXT",         logo: "/logos/sunnxt.svg",       fallback: "S", bg: "#0D0D11" },
+  { name: "ZEE5",            logo: "/logos/zee5.svg",         fallback: "Z", bg: "#180A2E" },
+  { name: "Sony LIV",        logo: "/logos/sonyliv.svg",      fallback: "S", bg: "#0A0A14" },
+  { name: "JioCinema",       logo: "/logos/jiocinema.svg",    fallback: "J", bg: "#93005A" },
+  { name: "MX Player",       logo: "/logos/mxplayer.svg",     fallback: "M", bg: "#0033AA" },
+  { name: "YouTube",         logo: "/logos/youtube.svg",      fallback: "Y", bg: "#FF0000" },
+  { name: "Discovery+",      logo: "/logos/discoveryplus.svg",fallback: "D", bg: "#002D40" },
+  { name: "Lionsgate Play",  logo: "/logos/lionsgate.svg",    fallback: "L", bg: "#0B0E14" },
+  { name: "Hungama Play",    logo: "/logos/hungama.svg",      fallback: "H", bg: "#99004C" },
+  { name: "ShemarooMe",      logo: "/logos/shemaroome.svg",   fallback: "S", bg: "#CC4400" },
 ];
 
 // Channel rows for the scrolling marquee — each row scrolls independently
 const channelRows = [
   [
-    { name: "Star Maa",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Star_Maa_logo.png/200px-Star_Maa_logo.png" },
-    { name: "Zee Telugu",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Zee_Telugu_logo.svg/200px-Zee_Telugu_logo.svg.png" },
-    { name: "ETV Telugu",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/ETV_Telugu_logo.svg/200px-ETV_Telugu_logo.svg.png" },
-    { name: "Gemini TV",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Gemini_TV_logo.svg/200px-Gemini_TV_logo.svg.png" },
-    { name: "Colors Telugu",  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Colors_Telugu_logo.svg/200px-Colors_Telugu_logo.svg.png" },
-    { name: "ETV Plus",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/ETV_Plus_logo.svg/200px-ETV_Plus_logo.svg.png" },
-    { name: "Zee Cinemalu",   logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Zee_Cinemalu_logo.svg/200px-Zee_Cinemalu_logo.svg.png" },
-    { name: "Gemini Movies",  logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Gemini_Movies_logo.svg/200px-Gemini_Movies_logo.svg.png" },
-    { name: "Sony Max",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Sony_MAX_Logo.svg/200px-Sony_MAX_Logo.svg.png" },
-    { name: "Maa Movies",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Maa_Movies_Logo.png/200px-Maa_Movies_Logo.png" },
-    { name: "Star Gold",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Star_Gold_logo.svg/200px-Star_Gold_logo.svg.png" },
-    { name: "Star Movies",    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Star_Movies_logo.svg/200px-Star_Movies_logo.svg.png" },
+    { name: "Star Maa",       logo: "/logos/starmaa.svg" },
+    { name: "Zee Telugu",     logo: "/logos/zeetelugu.svg" },
+    { name: "ETV Telugu",     logo: "/logos/etv.svg" },
+    { name: "Gemini TV",      logo: "/logos/gemini.svg" },
+    { name: "Colors Telugu",  logo: "/logos/colors.svg" },
+    { name: "ETV Plus",       logo: "/logos/etvplus.svg" },
+    { name: "Zee Cinemalu",   logo: "/logos/zeecinemalu.svg" },
+    { name: "Gemini Movies",  logo: "/logos/geminimovies.svg" },
+    { name: "Sony Max",       logo: "/logos/sonymax.svg" },
+    { name: "Maa Movies",     logo: "/logos/maamovies.svg" },
+    { name: "Star Gold",      logo: "/logos/stargold.svg" },
+    { name: "Star Movies",    logo: "/logos/starmovies.svg" },
   ],
   [
-    { name: "TV9 Telugu",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/TV9_Telugu_logo.svg/200px-TV9_Telugu_logo.svg.png" },
-    { name: "NTV",            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/NTV_Telugu_logo.svg/200px-NTV_Telugu_logo.svg.png" },
-    { name: "10TV",           logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/10TV_News_Logo.jpg/200px-10TV_News_Logo.jpg" },
-    { name: "ABN Andhra Jyothy", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/ABN_Andhra_Jyothy_logo.svg/200px-ABN_Andhra_Jyothy_logo.svg.png" },
-    { name: "HMTV",           logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/HMTV_logo.svg/200px-HMTV_logo.svg.png" },
-    { name: "V6 News",        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/V6_News_Logo.png/200px-V6_News_Logo.png" },
-    { name: "Sakshi TV",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Sakshi_TV_logo.svg/200px-Sakshi_TV_logo.svg.png" },
-    { name: "Mahaa TV",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Mahaa_TV_Logo.svg/200px-Mahaa_TV_Logo.svg.png" },
-    { name: "iNews",          logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/INews_Telugu_logo.svg/200px-INews_Telugu_logo.svg.png" },
-    { name: "T News",         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/T_News_logo.svg/200px-T_News_logo.svg.png" },
-    { name: "Studio N",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Studio_N_logo.svg/200px-Studio_N_logo.svg.png" },
-    { name: "TV5 News",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/TV5_Telugu_Logo.svg/200px-TV5_Telugu_Logo.svg.png" },
+    { name: "TV9 Telugu",     logo: "/logos/tv9.svg" },
+    { name: "NTV",            logo: "/logos/ntv.svg" },
+    { name: "10TV",           logo: "/logos/10tv.svg" },
+    { name: "ABN Andhra Jyothy", logo: "/logos/abn.svg" },
+    { name: "HMTV",           logo: "/logos/hmtv.svg" },
+    { name: "V6 News",        logo: "/logos/v6.svg" },
+    { name: "Sakshi TV",      logo: "/logos/sakshi.svg" },
+    { name: "Mahaa TV",       logo: "/logos/mahaa.svg" },
+    { name: "iNews",          logo: "/logos/inews.svg" },
+    { name: "T News",         logo: "/logos/tnews.svg" },
+    { name: "Studio N",       logo: "/logos/studion.svg" },
+    { name: "TV5 News",       logo: "/logos/tv5.svg" },
   ],
   [
-    { name: "YoYo TV",        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/YoYo_TV_Channel_logo.jpg/200px-YoYo_TV_Channel_logo.jpg" },
-    { name: "Bhakthi TV",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Bhakthi_TV_logo.svg/200px-Bhakthi_TV_logo.svg.png" },
-    { name: "Aastha",         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Aastha_channel.svg/200px-Aastha_channel.svg.png" },
-    { name: "Star Vijay",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Star_Vijay_logo.svg/200px-Star_Vijay_logo.svg.png" },
-    { name: "Sun TV",         logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Sun_TV_logo.svg/200px-Sun_TV_logo.svg.png" },
-    { name: "ZEE5",           logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/ZEE5_logo.svg/200px-ZEE5_logo.svg.png" },
-    { name: "JioCinema",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/JioCinema_2023_logo.svg/200px-JioCinema_2023_logo.svg.png" },
-    { name: "Sony LIV",       logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Sony_LIV_2020.svg/200px-Sony_LIV_2020.svg.png" },
-    { name: "Sun NXT",        logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Sun_NXT_logo.svg/200px-Sun_NXT_logo.svg.png" },
-    { name: "MX Player",      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/MX_Player_logo.svg/200px-MX_Player_logo.svg.png" },
-    { name: "Aha",            logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Aha_OTT_logo.png/200px-Aha_OTT_logo.png" },
-    { name: "JioHotstar",     logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Jio_Hotstar_logo.svg/200px-Jio_Hotstar_logo.svg.png" },
+    { name: "YoYo TV",        logo: "/logos/yoyo.svg" },
+    { name: "Bhakthi TV",     logo: "/logos/bhakthi.svg" },
+    { name: "Aastha",         logo: "/logos/aastha.svg" },
+    { name: "Star Vijay",     logo: "/logos/starvijay.svg" },
+    { name: "Sun TV",         logo: "/logos/suntv.svg" },
+    { name: "ZEE5",           logo: "/logos/zee5.svg" },
+    { name: "JioCinema",      logo: "/logos/jiocinema.svg" },
+    { name: "Sony LIV",       logo: "/logos/sonyliv.svg" },
+    { name: "Sun NXT",        logo: "/logos/sunnxt.svg" },
+    { name: "MX Player",      logo: "/logos/mxplayer.svg" },
+    { name: "Aha",            logo: "/logos/aha.svg" },
+    { name: "JioHotstar",     logo: "/logos/hotstar.svg" },
   ],
 ];
 
@@ -355,14 +355,14 @@ export default function Home() {
                 {[...row, ...row].map((ch, i) => (
                   <div
                     key={`${ch.name}-${i}`}
-                    className="glass mx-2 rounded-2xl flex flex-col items-center gap-2 p-3 w-24 shrink-0 hover:border-primary/40 transition-all"
+                    className="glass mx-2.5 rounded-2xl flex flex-col items-center gap-2.5 p-3.5 w-28 shrink-0 hover:border-primary/50 hover:scale-105 transition-all shadow-md"
                     data-testid={i < row.length ? `channel-logo-${ch.name.toLowerCase().replace(/ /g, "-")}` : undefined}
                   >
-                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 flex items-center justify-center">
+                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center p-1 shadow-inner">
                       <img
                         src={ch.logo}
                         alt={ch.name}
-                        className="w-full h-full object-contain p-1"
+                        className="w-full h-full object-contain rounded-lg"
                         onError={(e) => {
                           const t = e.currentTarget;
                           t.style.display = "none";
@@ -377,7 +377,7 @@ export default function Home() {
                         {ch.name.charAt(0)}
                       </span>
                     </div>
-                    <p className="text-[10px] text-center text-muted-foreground font-medium leading-tight line-clamp-2">{ch.name}</p>
+                    <p className="text-[11px] text-center text-foreground font-semibold leading-tight line-clamp-1">{ch.name}</p>
                   </div>
                 ))}
               </div>
@@ -400,7 +400,7 @@ export default function Home() {
             </h2>
             <p className="text-muted-foreground">All major streaming platforms included with select plans</p>
           </motion.div>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
             {ottApps.map((app, i) => (
               <motion.div
                 key={app.name}
@@ -412,13 +412,13 @@ export default function Home() {
                 data-testid={`ott-card-${app.name.toLowerCase().replace(/ /g, "-")}`}
               >
                 <div
-                  className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center"
+                  className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center shadow-lg p-1"
                   style={{ background: app.bg }}
                 >
                   <img
                     src={app.logo}
                     alt={app.name}
-                    className="w-full h-full object-contain p-1.5"
+                    className="w-full h-full object-contain rounded-xl"
                     onError={(e) => {
                       const t = e.currentTarget;
                       t.style.display = "none";
@@ -433,7 +433,7 @@ export default function Home() {
                     {app.fallback}
                   </span>
                 </div>
-                <p className="text-xs text-center text-muted-foreground font-medium leading-tight">{app.name}</p>
+                <p className="text-xs text-center text-foreground font-semibold leading-tight">{app.name}</p>
               </motion.div>
             ))}
           </div>

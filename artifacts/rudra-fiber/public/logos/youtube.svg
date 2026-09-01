@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <rect width="100" height="100" rx="20" fill="#FF0000"/>
+  <path d="M76 34c-.8-3-3.2-5.4-6.2-6.2C64.3 26 50 26 50 26s-14.3 0-19.8 1.8c-3 .8-5.4 3.2-6.2 6.2C22 39.5 22 50 22 50s0 10.5 2 16c.8 3 3.2 5.4 6.2 6.2 5.5 1.8 19.8 1.8 19.8 1.8s14.3 0 19.8-1.8c3-.8 5.4-3.2 6.2-6.2 2-5.5 2-16 2-16s0-10.5-2-16z" fill="#FFFFFF"/>
+  <path d="M44 41l16 9-16 9z" fill="#FF0000"/>
+  <text x="50" y="87" font-family="'Inter', system-ui, sans-serif" font-weight="900" font-size="10" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">YouTube</text>
+</svg>

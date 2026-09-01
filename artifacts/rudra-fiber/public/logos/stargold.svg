@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="sg_gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFE000"/><stop offset="100%" stop-color="#FF8C00"/></linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="20" fill="#1A1100"/>
+  <path d="M50 16l5 12 13 1-9 8 3 12-12-6-12 6 3-12-9-8 13-1z" fill="url(#sg_gold)"/>
+  <text x="50" y="64" font-family="'Inter', sans-serif" font-weight="900" font-size="12" fill="#FFFFFF" text-anchor="middle">STAR</text>
+  <text x="50" y="82" font-family="'Inter', sans-serif" font-weight="900" font-size="16" fill="url(#sg_gold)" text-anchor="middle">GOLD</text>
+</svg>
