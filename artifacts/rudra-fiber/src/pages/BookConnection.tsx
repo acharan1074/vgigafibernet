@@ -1,16 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle, Wifi, ChevronRight, ChevronLeft, User, Phone, MapPin, Calendar } from "lucide-react";
+import { MessageCircle, Wifi, ChevronRight, ChevronLeft, User, MapPin, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { useCreateConnection, useListPlans } from "@workspace/api-client-react";
-import { useToast } from "@/hooks/use-toast";
+import { useListPlans } from "@workspace/api-client-react";
+
+// ─── Config ──────────────────────────────────────────────────────────────────
+const WHATSAPP_NUMBER = "919948046456"; // service-provider WhatsApp (no + or spaces)
+
+// Fallback plans used when API is unavailable
+const FALLBACK_PLANS = [
+  { id: 1,   name: "SD 20 Mbps",              speed: 20,  price: 530  },
+  { id: 2,   name: "SD 30 Mbps",              speed: 30,  price: 520  },
+  { id: 3,   name: "SD 50 Mbps",              speed: 50,  price: 560  },
+  { id: 4,   name: "HD 20 Mbps",              speed: 20,  price: 550  },
+  { id: 5,   name: "HD 30 Mbps",              speed: 30,  price: 540  },
+  { id: 6,   name: "HD 50 Mbps",              speed: 50,  price: 580  },
+  { id: 7,   name: "Net 20 Mbps",             speed: 20,  price: 360  },
+  { id: 8,   name: "Net 30 Mbps",             speed: 30,  price: 350  },
+  { id: 9,   name: "Net 50 Mbps",             speed: 50,  price: 390  },
+  { id: 101, name: "BSNL FIBER HOME",         speed: 40,  price: 399  },
+  { id: 102, name: "BSNL FIBER BASIC",        speed: 60,  price: 499  },
+  { id: 103, name: "BSNL FIBER BASIC PLUS",   speed: 100, price: 599  },
+  { id: 104, name: "BSNL FIBER TB",           speed: 150, price: 799  },
+  { id: 105, name: "BSNL SUPER STAR PREMIUM", speed: 200, price: 999  },
+  { id: 106, name: "BSNL FIBER PREMIUM PLUS", speed: 250, price: 1499 },
+  { id: 107, name: "BSNL FIBER ULTRA",        speed: 300, price: 1799 },
+];
+
+// Build a pre-filled WhatsApp URL with all booking details
+function buildWhatsAppUrl(values: FormValues, planLabel: string): string {
+  const date = values.installationDate
+    ? new Date(values.installationDate).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })
+    : "Not specified";
+
+  const message = [
+    "🌐 *New Connection Request — VGIGA FIBER NET*",
+    "",
+    "👤 *Personal Details*",
+    `• Name       : ${values.fullName}`,
+    `• Mobile     : +91 ${values.mobile}`,
+    `• WhatsApp   : ${values.whatsapp ? "+91 " + values.whatsapp : "Same as mobile"}`,
+    "",
+    "📍 *Address*",
+    `• Address    : ${values.address}`,
+    `• Village    : ${values.village}`,
+    `• PIN Code   : ${values.pinCode}`,
+    "",
+    "📦 *Plan & Connection*",
+    `• Plan       : ${planLabel}`,
+    `• Type       : ${values.connectionType === "home" ? "Home Connection" : "Business Connection"}`,
+    `• Install On : ${date}`,
+    "",
+    "Please confirm availability and contact me to proceed. Thank you! 🙏",
+  ].join("\n");
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 
 const schema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -34,10 +86,12 @@ const steps = [
 
 export default function BookConnection() {
   const [step, setStep] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
-  const { toast } = useToast();
-  const { data: plans } = useListPlans();
-  const createConnection = useCreateConnection();
+  const { data: apiPlans } = useListPlans();
+
+  // Merge API plans with hardcoded fallback list
+  const plans = (apiPlans && apiPlans.length > 0)
+    ? apiPlans.map(p => ({ id: p.id, name: p.name, speed: p.speed, price: p.price }))
+    : FALLBACK_PLANS;
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -47,6 +101,13 @@ export default function BookConnection() {
     },
   });
 
+  // Pre-fill plan when navigated from Plans page via ?plan=<id>
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const planId = params.get("plan");
+    if (planId) form.setValue("planId", planId);
+  }, [form]);
+
   const onNext = async () => {
     const fields = steps[step].fields as (keyof FormValues)[];
     const valid = await form.trigger(fields);
@@ -54,57 +115,71 @@ export default function BookConnection() {
   };
 
   const onSubmit = (values: FormValues) => {
-    createConnection.mutate({
-      data: {
-        fullName: values.fullName,
-        mobile: values.mobile,
-        whatsapp: values.whatsapp || "",
-        address: values.address,
-        village: values.village,
-        pinCode: values.pinCode,
-        planId: values.planId ? Number(values.planId) : undefined,
-        connectionType: values.connectionType,
-        installationDate: values.installationDate || undefined,
-      },
-    }, {
-      onSuccess: () => setSubmitted(true),
-      onError: () => toast({ title: "Error", description: "Failed to submit request. Please try again.", variant: "destructive" }),
-    });
+    const selectedPlan = plans.find(p => String(p.id) === values.planId);
+    const planLabel = selectedPlan
+      ? `${selectedPlan.name} — ${selectedPlan.speed} Mbps — ₹${selectedPlan.price}/mo`
+      : values.planId ? `Plan ID ${values.planId}` : "Not selected";
+
+    // Open WhatsApp with pre-filled message in new tab, then show success screen
+    window.open(buildWhatsAppUrl(values, planLabel), "_blank", "noopener,noreferrer");
+    setStep(-1);
   };
 
-  if (submitted) {
+  // ── Success screen ──────────────────────────────────────────────────────────
+  if (step === -1) {
+    const values = form.getValues();
+    const selectedPlan = plans.find(p => String(p.id) === values.planId);
+    const planLabel = selectedPlan
+      ? `${selectedPlan.name} — ${selectedPlan.speed} Mbps — ₹${selectedPlan.price}/mo`
+      : "Not selected";
+
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <motion.div
-          className="glass rounded-3xl p-10 sm:p-16 text-center max-w-lg w-full relative overflow-hidden"
+          className="glass rounded-3xl p-10 sm:p-14 text-center max-w-lg w-full relative overflow-hidden"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", bounce: 0.4 }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10 pointer-events-none" />
+
           <motion.div
-            className="w-20 h-20 rounded-full gradient-gold mx-auto mb-6 flex items-center justify-center neon-gold"
+            className="w-20 h-20 rounded-full bg-[#25D366] mx-auto mb-6 flex items-center justify-center shadow-lg"
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <CheckCircle className="w-10 h-10 text-background" />
+            <MessageCircle className="w-10 h-10 text-white" />
           </motion.div>
-          <h2 className="font-display text-2xl font-black gradient-text mb-3">Booking Confirmed!</h2>
-          <p className="text-muted-foreground mb-2">Your connection request has been submitted successfully.</p>
-          <p className="text-sm text-muted-foreground mb-8">Our team will contact you within 24 hours to schedule installation.</p>
-          <div className="bg-primary/10 rounded-xl p-4 mb-8 text-left space-y-2">
-            <p className="text-sm font-semibold text-foreground">Confirmation Details:</p>
-            <p className="text-sm text-muted-foreground">Name: {form.getValues("fullName")}</p>
-            <p className="text-sm text-muted-foreground">Mobile: {form.getValues("mobile")}</p>
-            <p className="text-sm text-muted-foreground">Village: {form.getValues("village")}</p>
+
+          <h2 className="font-display text-2xl font-black gradient-text mb-2">Sent to WhatsApp!</h2>
+          <p className="text-muted-foreground mb-1">Your booking details have been sent to our team on WhatsApp.</p>
+          <p className="text-sm text-muted-foreground mb-6">If WhatsApp didn't open, tap the button below.</p>
+
+          <div className="bg-primary/10 rounded-xl p-4 mb-7 text-left space-y-1.5">
+            <p className="text-sm font-semibold text-foreground mb-2">Booking Summary</p>
+            <p className="text-sm text-muted-foreground">👤 {values.fullName}</p>
+            <p className="text-sm text-muted-foreground">📱 +91 {values.mobile}</p>
+            <p className="text-sm text-muted-foreground">📍 {values.village}, {values.pinCode}</p>
+            <p className="text-sm text-muted-foreground">📦 {planLabel}</p>
+            <p className="text-sm text-muted-foreground">{values.connectionType === "home" ? "🏠 Home" : "🏢 Business"} Connection</p>
           </div>
+
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="tel:+919948046456" className="flex-1">
-              <Button variant="outline" className="w-full border-primary/40 text-primary hover:bg-primary/10">
-                Call Support
+            <a
+              href={buildWhatsAppUrl(values, planLabel)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1"
+            >
+              <Button className="w-full bg-[#25D366] hover:bg-[#20b958] border-0 text-white font-bold gap-2">
+                <MessageCircle className="w-4 h-4" /> Open WhatsApp
               </Button>
             </a>
-            <Button onClick={() => { setSubmitted(false); form.reset(); setStep(0); }} className="flex-1 gradient-gold border-0 text-background font-semibold">
+            <Button
+              variant="outline"
+              onClick={() => { form.reset(); setStep(0); }}
+              className="flex-1 border-border/50"
+            >
               New Booking
             </Button>
           </div>
@@ -113,6 +188,7 @@ export default function BookConnection() {
     );
   }
 
+  // ── Booking form ────────────────────────────────────────────────────────────
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-16">
       {/* Header */}
@@ -121,7 +197,7 @@ export default function BookConnection() {
         <h1 className="font-display text-3xl sm:text-4xl font-black text-foreground mb-3">
           Get <span className="gradient-text">Connected Today</span>
         </h1>
-        <p className="text-muted-foreground">Fill in your details and we'll get you set up in no time</p>
+        <p className="text-muted-foreground">Fill in your details — we'll send them directly to our team on WhatsApp</p>
       </motion.div>
 
       {/* Progress steps */}
@@ -140,7 +216,7 @@ export default function BookConnection() {
         ))}
       </div>
 
-      {/* Form */}
+      {/* Form card */}
       <motion.div
         className="glass rounded-3xl p-6 sm:p-8"
         initial={{ opacity: 0, x: 20 }}
@@ -150,6 +226,7 @@ export default function BookConnection() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <AnimatePresence mode="wait">
+              {/* Step 0 — Personal Info */}
               {step === 0 && (
                 <motion.div key="step0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <FormField control={form.control} name="fullName" render={({ field }) => (
@@ -168,13 +245,15 @@ export default function BookConnection() {
                   )} />
                   <FormField control={form.control} name="whatsapp" render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-foreground font-semibold">WhatsApp Number</FormLabel>
-                      <FormControl><Input placeholder="WhatsApp number (if different)" {...field} data-testid="input-whatsapp" className="bg-muted/30 border-border/50 focus:border-primary" /></FormControl>
+                      <FormLabel className="text-foreground font-semibold">WhatsApp Number <span className="text-muted-foreground font-normal">(if different)</span></FormLabel>
+                      <FormControl><Input placeholder="WhatsApp number" {...field} data-testid="input-whatsapp" className="bg-muted/30 border-border/50 focus:border-primary" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )} />
                 </motion.div>
               )}
+
+              {/* Step 1 — Address */}
               {step === 1 && (
                 <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <FormField control={form.control} name="address" render={({ field }) => (
@@ -200,29 +279,25 @@ export default function BookConnection() {
                   )} />
                 </motion.div>
               )}
+
+              {/* Step 2 — Plan & Date */}
               {step === 2 && (
                 <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-5">
                   <FormField control={form.control} name="planId" render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-foreground font-semibold">Select Plan</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select onValueChange={field.onChange} value={field.value}>
                         <FormControl>
                           <SelectTrigger data-testid="select-plan" className="bg-muted/30 border-border/50">
                             <SelectValue placeholder="Choose a broadband plan" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {plans && plans.length > 0 ? plans.map(p => (
+                          {plans.map(p => (
                             <SelectItem key={p.id} value={String(p.id)}>
                               {p.name} — {p.speed} Mbps — ₹{p.price}/mo
                             </SelectItem>
-                          )) : (
-                            <>
-                              <SelectItem value="1">SD 20 Mbps — ₹530/mo</SelectItem>
-                              <SelectItem value="2">HD 30 Mbps — ₹540/mo</SelectItem>
-                              <SelectItem value="3">Net 50 Mbps — ₹390/mo</SelectItem>
-                            </>
-                          )}
+                          ))}
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -242,7 +317,7 @@ export default function BookConnection() {
                               field.value === type ? "gradient-gold border-0 text-background neon-gold" : "glass border-border/50 text-muted-foreground"
                             }`}
                           >
-                            {type === "home" ? "Home" : "Business"}
+                            {type === "home" ? "🏠 Home" : "🏢 Business"}
                           </button>
                         ))}
                       </div>
@@ -257,10 +332,19 @@ export default function BookConnection() {
                       <FormMessage />
                     </FormItem>
                   )} />
+
+                  {/* WhatsApp notice */}
+                  <div className="flex items-start gap-3 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 px-4 py-3">
+                    <MessageCircle className="w-5 h-5 text-[#25D366] shrink-0 mt-0.5" />
+                    <p className="text-sm text-muted-foreground">
+                      Tapping <strong className="text-foreground">Book via WhatsApp</strong> will open WhatsApp with your details pre-filled and send them directly to our team.
+                    </p>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
+            {/* Navigation */}
             <div className="flex gap-3 pt-2">
               {step > 0 && (
                 <Button type="button" variant="outline" onClick={() => setStep(s => s - 1)} className="flex-1 border-border/50" data-testid="btn-prev-step">
@@ -272,9 +356,10 @@ export default function BookConnection() {
                   Next <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               ) : (
-                <Button type="submit" disabled={createConnection.isPending} className="flex-1 gradient-gold border-0 text-background font-bold" data-testid="btn-submit-booking">
-                  {createConnection.isPending ? "Submitting..." : "Book Connection"}
-                  <Wifi className="w-4 h-4 ml-1" />
+                <Button type="submit" className="flex-1 bg-[#25D366] hover:bg-[#20b958] border-0 text-white font-bold gap-2" data-testid="btn-submit-booking">
+                  <MessageCircle className="w-4 h-4" />
+                  Book via WhatsApp
+                  <Wifi className="w-4 h-4" />
                 </Button>
               )}
             </div>

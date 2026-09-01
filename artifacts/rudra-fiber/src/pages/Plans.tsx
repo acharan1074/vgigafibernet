@@ -205,7 +205,7 @@ export default function Plans() {
                         ))}
                       </ul>
                       <div className="flex gap-2">
-                        <Link href="/book">
+                        <Link href={`/book?plan=${plan.id}`}>
                           <Button className="flex-1 gradient-gold border-0 text-background font-semibold hover:opacity-90" data-testid={`plan-buy-${plan.id}`}>
                             Buy Now <ChevronRight className="w-4 h-4 ml-1" />
                           </Button>
