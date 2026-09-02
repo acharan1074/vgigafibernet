@@ -26,9 +26,9 @@ export default function Navbar() {
           <Link href="/" data-testid="nav-logo">
             <div className="flex items-center gap-2.5 cursor-pointer">
               <img
-                src="/vgiga-logo.jpeg"
+                src="/vgiga-logo-rect.png"
                 alt="VGIGA FIBER NET"
-                className="h-10 w-10 rounded-xl object-cover object-center"
+                className="h-10 sm:h-11 w-auto max-w-[140px] sm:max-w-[160px] object-contain rounded-lg border border-white/10 shadow-sm"
               />
               <div className="leading-tight">
                 <span className="font-display text-sm sm:text-base font-bold gradient-text tracking-wider block">

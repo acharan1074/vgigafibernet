@@ -11,9 +11,9 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <img
-                src="/vgiga-logo.jpeg"
+                src="/vgiga-logo-rect.png"
                 alt="VGIGA FIBER NET"
-                className="h-12 w-12 rounded-xl object-cover object-center"
+                className="h-12 w-auto max-w-[170px] object-contain rounded-lg border border-white/10 shadow-sm"
               />
               <div>
                 <p className="font-display font-bold gradient-text tracking-wider">VGIGA FIBER NET</p>
