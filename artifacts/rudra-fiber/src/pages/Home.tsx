@@ -48,8 +48,8 @@ const ottApps = [
 const channelRows = [
   [
     { name: "Star Maa",       logo: "/logos/starmaa.png" },
-    { name: "Zee Telugu",     logo: "/logos/zeetelugu.svg" },
-    { name: "ETV Telugu",     logo: "/logos/etv.svg" },
+    { name: "Zee Telugu",     logo: "/logos/zeetelugu.png" },
+    { name: "ETV Telugu",     logo: "/logos/etv.png" },
     { name: "Gemini TV",      logo: "/logos/gemini.png" },
     { name: "Colors Telugu",  logo: "/logos/colors.png" },
     { name: "ETV Plus",       logo: "/logos/etvplus.png" },
@@ -62,8 +62,8 @@ const channelRows = [
   ],
   [
     { name: "TV9 Telugu",     logo: "/logos/tv9.svg" },
-    { name: "NTV",            logo: "/logos/ntv.svg" },
-    { name: "10TV",           logo: "/logos/10tv.svg" },
+    { name: "NTV",            logo: "/logos/ntv.png" },
+    { name: "10TV",           logo: "/logos/10tv.png" },
     { name: "ABN Andhra Jyothy", logo: "/logos/abn.svg" },
     { name: "HMTV",           logo: "/logos/hmtv.svg" },
     { name: "V6 News",        logo: "/logos/v6.svg" },
