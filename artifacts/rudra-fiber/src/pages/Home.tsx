@@ -47,7 +47,7 @@ const ottApps = [
 // Channel rows for the scrolling marquee — each row scrolls independently
 const channelRows = [
   [
-    { name: "Star Maa",       logo: "/logos/starmaa.svg" },
+    { name: "Star Maa",       logo: "/logos/starmaa.png" },
     { name: "Zee Telugu",     logo: "/logos/zeetelugu.svg" },
     { name: "ETV Telugu",     logo: "/logos/etv.svg" },
     { name: "Gemini TV",      logo: "/logos/gemini.png" },
@@ -55,10 +55,10 @@ const channelRows = [
     { name: "ETV Plus",       logo: "/logos/etvplus.png" },
     { name: "Zee Cinemalu",   logo: "/logos/zeecinemalu.png" },
     { name: "Gemini Movies",  logo: "/logos/geminimovies.png" },
-    { name: "Sony Max",       logo: "/logos/sonymax.svg" },
-    { name: "Maa Movies",     logo: "/logos/maamovies.svg" },
-    { name: "Star Gold",      logo: "/logos/stargold.svg" },
-    { name: "Star Movies",    logo: "/logos/starmovies.svg" },
+    { name: "Sony Max",       logo: "/logos/sonymax.png" },
+    { name: "Maa Movies",     logo: "/logos/maamovies.png" },
+    { name: "Star Gold",      logo: "/logos/stargold.png" },
+    { name: "Star Movies",    logo: "/logos/starmovies.png" },
   ],
   [
     { name: "TV9 Telugu",     logo: "/logos/tv9.svg" },
